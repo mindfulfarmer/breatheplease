@@ -26,15 +26,15 @@ Features
   Typography Options: Toggle between Serif (Crimson Text) and Sans-Serif (Source Sans 3).
 
 Technical Implementation
-  Frontend: Built with HTML5, CSS3, and Vanilla JavaScript.
-  Styling: Utilizes CSS custom properties for theme switching and clamp() for fluid, responsive typography.
-  Audio Engine: Implements a dual-track HTMLAudioElement system to prevent gaps during loop iterations.
-  Animation: Driven by CSS @keyframes and synced with JavaScript animationiteration events.
-  How to Use
-  Start: Match your inhalation to the expansion of the central sphere and your exhalation to its contraction.
+  1. Frontend: Built with HTML5, CSS3, and Vanilla JavaScript.
+  2. Styling: Utilizes CSS custom properties for theme switching and clamp() for fluid, responsive typography.
+  3. Audio Engine: Implements a dual-track HTMLAudioElement system to prevent gaps during loop iterations.
+  4. Animation: Driven by CSS @keyframes and synced with JavaScript animationiteration events.
   
-Interact:
-  Settings: Click the settings button or the central lotus graphic to access the menu.
-  Audio: Click the sound button at the bottom-left or click anywhere on the background to toggle the ambient track.
-  Fonts: Click the quote text directly to instantly switch between Serif and Sans-Serif styles.
-  Manual Inspiration: Use the "Inspire me" button at the bottom-right to skip to a new quote.
+How to Use
+  1. Start: Match your inhalation to the expansion of the central sphere and your exhalation to its contraction.
+  2. Interact:
+    a. Settings: Click the settings button or the central lotus graphic to access the menu.
+    b. Audio: Click the sound button at the bottom-left or click anywhere on the background to toggle the ambient track.
+    c. Fonts: Click the quote text directly to instantly switch between Serif and Sans-Serif styles.
+    d. Manual Inspiration: Use the "Inspire me" button at the bottom-right to skip to a new quote.
