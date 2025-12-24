@@ -34,7 +34,7 @@ Technical Implementation
 How to Use
   1. Start: Match your inhalation to the expansion of the central sphere and your exhalation to its contraction.
   2. Interact:
-    a. Settings: Click the settings button or the central lotus graphic to access the menu.
-    b. Audio: Click the sound button at the bottom-left or click anywhere on the background to toggle the ambient track.
-    c. Fonts: Click the quote text directly to instantly switch between Serif and Sans-Serif styles.
-    d. Manual Inspiration: Use the "Inspire me" button at the bottom-right to skip to a new quote.
+     1. Settings: Click the settings button or the central lotus graphic to access the menu.
+     2. Audio control: Click the sound button at the bottom-left or click anywhere on the background to toggle the ambient track.
+     3. Font change: Click the quote text directly to instantly switch between Serif and Sans-Serif styles.
+     4. Manual quote generation: Use the "Inspire me" button at the bottom-right to skip to a new quote.
