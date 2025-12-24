@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breathe Please</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><g transform=%22translate(50,50)%22 stroke=%22%23E69C85%22 stroke-width=%223%22 fill=%22none%22><path d=%22M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0%22/><path d=%22M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0%22 transform=%22rotate(60)%22/><path d=%22M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0%22 transform=%22rotate(120)%22/><path d=%22M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0%22 transform=%22rotate(180)%22/><path d=%22M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0%22 transform=%22rotate(240)%22/><path d=%22M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0%22 transform=%22rotate(300)%22/></g></svg>">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Inter:wght@300;400;500;600;700&family=Source+Sans+3:wght@300;400;500&display=swap');
+        
+        :root {
+            /* --- LIGHT MODE PALETTE (Pantone Coconut Milk / Caviar) --- */
+            --bg-color: #F0EEE9;          /* Pantone 11-0608 Coconut Milk */
+            --text-color: #292A2D;        /* Pantone 19-4006 Caviar */
+            --subtle-text: #8C8B88;       /* Warm Stone Gray */
+            --accent-happy: #E69C85;      /* Graphics/SVG Color */
+            --accent-text: #C67E69;       /* Darker shade for Text Readability */
+            --modal-bg: rgba(240, 238, 233, 0.95);
+            --modal-shadow: rgba(41, 42, 45, 0.1);
+            --modal-border: #E0DED9;
+            --btn-border: #D1CEC7;
+            --btn-hover-bg: rgba(41, 42, 45, 0.05);
+
+            /* --- 3D SPHERE PALETTE (Light) --- */
+            --sphere-highlight: rgba(255, 255, 255, 0.95); /* Bright shine */
+            --sphere-mid: rgba(255, 255, 255, 0.6);        /* Main body */
+            --sphere-shadow: rgba(200, 198, 190, 0.6);     /* Warm beige shadow */
+        }
+
+        [data-theme="dark"] {
+            /* --- DARK MODE PALETTE (Pantone Jet Black / Silver) --- */
+            --bg-color: #121212;          /* Pantone 19-0303 Jet Black equivalent */
+            --text-color: #E5E5E5;        /* Soft White */
+            --subtle-text: #A3A3A3;       /* Neutral Silver */
+            --accent-happy: #E69C85;
+            --accent-text: #E69C85;       
+            --modal-bg: rgba(30, 30, 30, 0.95);
+            --modal-shadow: rgba(0, 0, 0, 0.6);
+            --modal-border: #333333;
+            --btn-border: #444444;
+            --btn-hover-bg: rgba(255, 255, 255, 0.05);
+
+            /* --- 3D SPHERE PALETTE (Dark) --- */
+            --sphere-highlight: rgba(255, 255, 255, 0.12);
+            --sphere-mid: rgba(255, 255, 255, 0.03);
+            --sphere-shadow: rgba(0, 0, 0, 0.8);
+        }
+
+        [data-theme="blue"] {
+            /* --- REVERTED BLUE PALETTE (Pantone Classic Blue inspired) --- */
+            --bg-color: #0A1128;          /* Midnight Navy */
+            --text-color: #E1E7F5;        /* Cool Platinum */
+            --subtle-text: #8B9BB4;       /* Muted Steel Blue */
+            --accent-happy: #0F4C81;      /* Pantone Classic Blue (Graphics) */
+            --accent-text: #5389C4;       /* Lighter Royal Blue (Text) */
+            --modal-bg: rgba(10, 17, 40, 0.95);
+            --modal-shadow: rgba(0, 0, 0, 0.6);
+            --modal-border: #1C2A4A;
+            --btn-border: #2B4270;
+            --btn-hover-bg: rgba(83, 137, 196, 0.1);
+
+            /* --- 3D SPHERE PALETTE (Blue) --- */
+            --sphere-highlight: rgba(100, 180, 255, 0.15); /* Soft Moonlight */
+            --sphere-mid: rgba(15, 76, 129, 0.2);          /* Classic Blue Body */
+            --sphere-shadow: rgba(2, 5, 15, 0.9);          /* Deep Abyss */
+        }
+
+        [data-theme="green"] {
+            /* --- REVERTED GREEN PALETTE (Pantone Green Gables inspired) --- */
+            --bg-color: #051916;          /* Deepest Seaweed Green */
+            --text-color: #E0F2F1;        /* Sea Salt White */
+            --subtle-text: #688F88;       /* Sage Mist */
+            --accent-happy: #009473;      /* Pantone Emerald (Graphics) */
+            --accent-text: #4DB6AC;       /* Soft Seafoam (Text) */
+            --modal-bg: rgba(5, 25, 22, 0.95);
+            --modal-shadow: rgba(0, 0, 0, 0.6);
+            --modal-border: #143D36;
+            --btn-border: #235C52;
+            --btn-hover-bg: rgba(77, 182, 172, 0.1);
+
+            /* --- 3D SPHERE PALETTE (Green) --- */
+            --sphere-highlight: rgba(77, 182, 172, 0.15);  /* Bioluminescent Glow */
+            --sphere-mid: rgba(0, 148, 115, 0.15);         /* Emerald Body */
+            --sphere-shadow: rgba(0, 10, 8, 0.9);          /* Deep Trench */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: var(--bg-color); 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            position: relative;
+            color: var(--text-color); 
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+        
+        /* Background & Animation - UPDATED 3D EFFECT */
+        .breathing-bg {
+            position: fixed;
+            top: 50%; left: 50%; /* Center the shape */
+            width: 85vmin; height: 85vmin; /* Responsive circle */
+            border-radius: 50%;
+            
+            /* 3D Gradient: Light source top-left (30% 30%) */
+            background: radial-gradient(circle at 30% 30%, 
+                var(--sphere-highlight) 0%, 
+                var(--sphere-mid) 25%, 
+                var(--sphere-shadow) 85%,
+                transparent 100%
+            );
+            
+            z-index: -1; pointer-events: none;
+            
+            /* Soft blur to blend into background like atmosphere */
+            filter: blur(25px); 
+            
+            /* Initial State */
+            transform: translate(-50%, -50%) scale(0.9);
+            opacity: 0.8;
+            transition: background 0.5s ease;
+        }
+
+        .breathing-active { 
+            animation: breathe 12s cubic-bezier(0.45, 0, 0.55, 1) infinite; 
+        }
+        
+        @keyframes breathe {
+            /* EXHALE / REST STATE */
+            0%, 100% { 
+                opacity: 0.6; 
+                transform: translate(-50%, -50%) scale(0.85); 
+                /* Subtle shadows when small */
+                box-shadow: 
+                    0 10px 30px var(--sphere-shadow), 
+                    inset 5px 5px 30px var(--sphere-highlight);
+            }
+            /* INHALE / HOLD PEAK */
+            40%, 60% { 
+                opacity: 1.0; 
+                transform: translate(-50%, -50%) scale(1.15); 
+                /* Deep, expansive shadows creating 3D pop */
+                box-shadow: 
+                    0 40px 100px var(--sphere-shadow), 
+                    inset 20px 20px 100px var(--sphere-highlight);
+            }
+        }
+
+        /* Header */
+        .header {
+            padding: 40px 50px;
+            position: fixed; top: 0; left: 0; width: 100%;
+            z-index: 100;
+            display: flex; justify-content: center; align-items: center; 
+            opacity: 0.5; transition: opacity 0.5s ease;
+        }
+        .header:hover { opacity: 1; }
+        
+        .time-display {
+            position: absolute; left: 50px; top: 50%; transform: translateY(-50%);
+            font-family: 'Inter', sans-serif; font-size: 12px; color: var(--subtle-text);  
+            font-weight: 400; opacity: 0.8; letter-spacing: 0.5px;
+            display: flex; align-items: center;
+        }
+
+        .date-display {
+            font-family: 'Inter', sans-serif; font-size: 12px; color: var(--subtle-text);  
+            font-weight: 400; opacity: 0.8; letter-spacing: 0.5px; text-align: center;
+        }
+
+        .info-btn {
+            position: absolute; right: 50px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; cursor: pointer; color: var(--subtle-text); 
+            opacity: 0.6; transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center;
+            padding: 8px; width: 40px; height: 40px;
+        }
+        .info-btn:hover { color: var(--accent-happy); opacity: 1; }
+        .info-icon svg { width: 18px; height: 18px; fill: currentColor; display: block; }
+
+        /* Modals */
+        .info-overlay, .author-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.1); backdrop-filter: blur(4px);
+            z-index: 200; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .info-overlay.active, .author-overlay.active { opacity: 1; pointer-events: all; }
+
+        .info-box, .author-box {
+            background: var(--modal-bg);
+            padding: 40px 35px; border-radius: 20px;
+            box-shadow: 0 15px 50px var(--modal-shadow); 
+            max-width: 400px; width: 85%;
+            text-align: center;
+            transform: translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
+            position: relative; border: 1px solid var(--modal-border);
+        }
+        .info-overlay.active .info-box, .author-overlay.active .author-box { transform: translateY(0); }
+
+        /* Author List Specifics */
+        .author-box {
+            max-height: 70vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .author-list-container {
+            overflow-y: auto;
+            margin-top: 15px;
+            padding-right: 5px;
+            text-align: left;
+            flex: 1;
+        }
+        .author-list-container::-webkit-scrollbar { width: 4px; }
+        .author-list-container::-webkit-scrollbar-thumb { background-color: var(--subtle-text); border-radius: 4px; }
+        
+        .author-item {
+            font-family: 'Inter', sans-serif; font-size: 0.9em;
+            color: var(--text-color); padding: 8px 0;
+            border-bottom: 1px solid var(--modal-border);
+        }
+        .author-item:last-child { border-bottom: none; }
+
+        .info-logo {
+            width: 40px; height: 40px; margin: 0 auto 10px auto; display: block;
+            fill: none; 
+            stroke: var(--accent-happy); 
+            stroke-width: 3;
+            stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.5s ease;
+            animation: lotus-spin 30s linear infinite;
+        }
+        .info-title { font-family: 'Asap', sans-serif; font-size: 1.6em; color: var(--text-color); margin-bottom: 4px; font-weight: 600; }
+        .info-version { font-family: 'Inter', sans-serif; font-size: 0.65em; color: var(--subtle-text); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 25px; font-weight: 500; display: block; }
+        .info-text { font-family: 'Inter', sans-serif; font-size: 0.95em; color: var(--subtle-text); line-height: 1.6; margin-bottom: 25px; margin-top: 10px; }
+        
+        .info-footer { 
+            font-size: 0.75em; 
+            color: var(--subtle-text); 
+            border-top: none; 
+            padding-top: 20px; 
+            margin-top: 10px; 
+            font-weight: 500; 
+            text-transform: none; 
+            letter-spacing: 0.5px; 
+            line-height: 1.6; 
+        }
+
+        /* Creator Link */
+        .creator-link {
+            color: var(--accent-text);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--accent-text);
+            transition: all 0.3s ease;
+        }
+        .creator-link:hover {
+            color: var(--accent-happy);
+            border-color: var(--accent-happy);
+            opacity: 0.8;
+        }
+
+        .close-modal {
+            position: absolute; top: 15px; right: 15px; background: none; border: none;
+            cursor: pointer; color: var(--subtle-text); font-size: 24px; line-height: 1;
+            transition: color 0.2s; padding: 5px;
+        }
+        .close-modal:hover { color: var(--text-color); }
+
+        /* Buttons */
+        .std-btn {
+            background: transparent; border: 1px solid var(--btn-border);
+            color: var(--subtle-text); padding: 8px 16px; border-radius: 6px;
+            cursor: pointer; font-family: 'Inter', sans-serif; font-size: 10px; 
+            margin: 10px 0 20px 0; transition: all 0.3s ease; width: 100%;
+        }
+        .std-btn:hover { border-color: var(--accent-happy); color: var(--accent-text); background: var(--btn-hover-bg); }
+
+        /* View Button */
+        .view-btn {
+            background: transparent; border: 1px solid var(--btn-border);
+            color: var(--subtle-text); padding: 4px 12px; border-radius: 15px;
+            cursor: pointer; font-family: 'Inter', sans-serif; font-size: 10px;
+            transition: all 0.3s ease; height: 24px; display: flex; align-items: center; justify-content: center;
+        }
+        .view-btn:hover { border-color: var(--accent-happy); color: var(--accent-text); background: var(--btn-hover-bg); }
+
+        /* Settings Headers */
+        .settings-header {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75em;
+            color: var(--text-color);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            margin: 25px 0 15px 0;
+            padding-bottom: 5px;
+            border-bottom: none; 
+            opacity: 0.9;
+            text-align: left;
+        }
+
+        /* Toggle & Settings Rows */
+        .theme-switch-wrapper { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 10px; width: 100%; }
+        .theme-switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0;}
+        .theme-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; }
+        input:checked + .slider { background-color: var(--accent-happy); }
+        input:focus + .slider { box-shadow: 0 0 1px var(--accent-happy); }
+        input:checked + .slider:before { transform: translateX(18px); }
+        .slider.round { border-radius: 34px; }
+        .slider.round:before { border-radius: 50%; }
+        .mode-label { font-size: 0.8em; color: var(--subtle-text); font-weight: 500; text-transform: capitalize; letter-spacing: 0px; text-align: left; }
+
+        /* NEW VOLUME BUTTONS */
+        .volume-btn-group { display: flex; gap: 6px; }
+        .vol-btn {
+            background: transparent; border: 1px solid var(--btn-border);
+            color: var(--subtle-text); padding: 4px 10px; border-radius: 15px;
+            cursor: pointer; font-family: 'Inter', sans-serif; font-size: 10px;
+            transition: all 0.3s ease; height: 24px; display: flex; align-items: center; justify-content: center;
+        }
+        .vol-btn:hover { border-color: var(--accent-happy); background: var(--btn-hover-bg); }
+        .vol-btn.active { border-color: var(--accent-happy); color: var(--accent-text); background: var(--btn-hover-bg); font-weight: 600; }
+        .vol-btn.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+
+        /* Lotus Center - UPDATED FOR INTERACTION */
+        .lotus-container {
+            position: absolute; top: 22%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 5; opacity: .7; 
+            pointer-events: auto; /* Changed from none to auto */
+            cursor: pointer;      /* Added cursor */
+            transition: opacity 0.3s;
+        }
+        .lotus-container:hover { opacity: 1; }
+        .lotus-active { animation: lotus-breathe 12s ease-in-out infinite; }
+        .lotus-icon {
+            width: 40px; height: 40px; fill: none; stroke: var(--accent-happy);
+            stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+            animation: lotus-spin 30s linear infinite;
+        }
+        @keyframes lotus-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Volume Slider in Settings (Removed from code, but kept class just in case for popup) */
+        .volume-slider { width: 80px; height: 4px; -webkit-appearance: none; appearance: none; background: var(--btn-border); border-radius: 2px; outline: none; cursor: pointer; transition: opacity 0.3s; }
+        .volume-slider.disabled { opacity: 0.5; cursor: not-allowed; }
+        .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; background: var(--accent-happy); border-radius: 50%; cursor: pointer; transition: transform 0.1s; }
+        .volume-slider::-webkit-slider-thumb:active { transform: scale(1.2); }
+
+        /* Audio Controls (Old Popup) */
+        .sound-control {
+            position: fixed; bottom: 90px; right: 175px; z-index: 100;
+            display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+            background: var(--modal-bg); backdrop-filter: blur(5px);
+            border-radius: 8px; box-shadow: 0 4px 20px var(--modal-shadow);
+            opacity: 0; pointer-events: none; transform: translateY(10px);
+            transition: all 0.3s ease; font-family: 'Inter', sans-serif;
+            border: 1px solid var(--modal-border);
+        }
+        .sound-control.visible { opacity: 1; pointer-events: all; transform: translateY(0); }
+        .sound-label { font-size: 10px; color: var(--subtle-text); font-family: 'Inter', sans-serif; font-weight: 500; min-width: 35px; text-align: left; }
+        .mute-btn { font-size: 16px; min-width: 24px; text-align: center; color: var(--subtle-text); cursor: pointer; background: none; border: none; display: flex; align-items: center; justify-content: center; transition: transform 0.1s; }
+        .mute-btn:active { transform: scale(0.9); }
+        
+        /* New Sound Button Styles */
+        .sound-btn {
+            position: fixed; bottom: 40px; left: 50px; z-index: 50;
+            padding: 8px 22px; font-size: 9px; /* Smaller Font */
+            background: transparent;
+            color: var(--subtle-text); 
+            border: none; /* No Border */
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif; font-weight: 400;
+            display: flex; align-items: center; user-select: none;
+            cursor: pointer; 
+            /* UPDATED: Opacity is always 1 so text is visible */
+            opacity: 1; 
+            transition: all 0.3s ease;
+        }
+        /* UPDATED: Hover state keeps subtle color */
+        .sound-btn:hover { color: var(--subtle-text); background: var(--btn-hover-bg); }
+        .sound-btn:active { transform: scale(0.98); }
+        
+        /* UPDATED: Active state uses faded/subtle color */
+        .sound-btn.active { color: var(--subtle-text); }
+        
+        /* UPDATED: Pulse dot has low opacity when inactive, high when active/hover */
+        .pulse { display: inline-block; width: 6px; height: 6px; background: var(--subtle-text); border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; margin-right: 10px; opacity: 0.4; transition: opacity 0.3s ease; }
+        
+        .sound-btn:hover .pulse { opacity: 1; }
+        .sound-btn.active .pulse { background: var(--accent-happy); opacity: 1; }
+        
+        /* DARK MODE TEXT OPACITY OVERRIDE */
+        [data-theme="dark"] .sound-btn #soundBtnText { opacity: 0.4; }
+
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        
+        .container { flex: 1; position: relative; width: 100%; overflow: hidden; }
+        .quote-box { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; max-width: 1000px; width: 100%; padding: 0 48px; transition: top 1s cubic-bezier(0.4, 0, 0.2, 1); }
+        .quote-box.no-author { top: 50%; }
+        .quote-wrapper { position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        
+        /* UPDATED: Proportional Font Size using clamp() */
+        .quote-text {
+            font-family: 'Crimson Text', 'Crimson Pro', serif; 
+            /* Scale from 1.8rem to 3.5rem based on width */
+            font-size: clamp(1.8rem, 4vw, 3.5rem); 
+            font-weight: 400; color: var(--text-color); padding: 0 50px; 
+            /* UPDATED: Changed from 1.3 to 1.3em */
+            line-height: 1.5em; 
+            margin: 0;
+            transition: opacity 2s ease-in-out, font-family 0.3s ease, color 0.5s ease; opacity: 1; text-shadow: 0 1px 0 rgba(255,255,255,0.1); cursor: pointer; user-select: none; 
+            word-spacing: 0.5px; 
+        }
+        .quote-text.fast-mode { transition: opacity 0.8s ease-in-out; }
+        .quote-text:hover { opacity: 0.85; }
+        
+        /* UPDATED: Sans Proportional Scaling */
+        .quote-text.sans-mode { 
+            font-family: 'Source Sans 3', sans-serif; 
+            /* Scale from 1.8rem to 3.2rem */
+            font-size: clamp(1.8rem, 3.8vw, 3.2rem); 
+            font-weight: 400; letter-spacing: 0px; 
+            /* UPDATED: Changed from 1.4 to 1.3em */
+            line-height: 1.5em; 
+        }
+        
+        /* NEW: Dark Mode Sans Weight Override - NOW INCLUDES BLUE AND GREEN MODE */
+        [data-theme="dark"] .quote-text.sans-mode,
+        [data-theme="blue"] .quote-text.sans-mode,
+        [data-theme="green"] .quote-text.sans-mode {
+            font-weight: 300;
+        }
+        
+        .quote-author {
+            position: absolute; top: 72%; left: 0; width: 100%; text-align: center;
+            font-size: 0.75em; color: var(--subtle-text); font-style: normal; font-family: 'Inter', sans-serif; font-weight: 400; letter-spacing: 1px; text-transform: uppercase;
+            transition: opacity 2s ease-in-out; transition-delay: 1.2s; opacity: 1; z-index: 10;
+        }
+        .quote-author.fast-mode { transition: opacity 0.8s ease-in-out; transition-delay: 0s; }
+        .text-faded { opacity: 0 !important; }
+        .quote-author.text-faded { transition-delay: 0s; }
+        
+        /* Fixed Button Container */
+        .button-container { position: fixed; bottom: 40px; right: 50px; left: auto; transform: none; z-index: 50; opacity: 0.6; transition: opacity 0.3s ease; }
+        .button-container:hover { opacity: 1; }
+        
+        .inspire-btn {
+            padding: 8px 22px; font-size: 10px; 
+            background: transparent; color: var(--subtle-text); border: 1px solid var(--btn-border); border-radius: 50px;
+            cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 400; transition: all 0.3s ease;
+        }
+        .inspire-btn:hover { border-color: var(--accent-happy); color: var(--accent-text); background: var(--btn-hover-bg); }
+        .inspire-btn:active { transform: scale(0.98); }
+        
+        @media (max-width: 600px) {
+            .header { padding: 25px 30px; }
+            .date-display { font-size: 11px; } 
+            .info-btn { right: 30px; } 
+            .time-display { left: 30px; font-size: 11px; }
+            .quote-box { padding: 0 20px; }
+            .lotus-container { top: 20%; }
+            .quote-author { top: 75%; }
+            /* UPDATED: Removed hardcoded font-sizes here to let clamp() handle it */
+            .quote-author { font-size: 0.65em; } 
+            
+            .button-container { bottom: 30px; right: 30px; }
+            .inspire-btn { font-size: 9px; } 
+            
+            /* Mobile adjustment for Sound Button */
+            .sound-btn { bottom: 30px; left: 30px; font-size: 9px; }
+            .sound-control { right: 150px; bottom: 80px; }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <div class="breathing-bg" id="breathingBg"></div>
+    
+    <div class="header">
+        <div class="time-display" id="timeDisplay"></div>
+        <div class="date-display" id="dateDisplay"></div>
+        <button class="info-btn" id="infoBtn" aria-label="Settings & Info">
+            <span class="info-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.58 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                </svg>
+            </span>
+        </button>
+    </div>
+    
+    <div class="info-overlay" id="infoModal">
+        <div class="info-box">
+            <button class="close-modal" id="closeBtn">×</button>
+            <svg class="info-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(50,50)">
+                    <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(0)"/>
+                    <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(60)"/>
+                    <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(120)"/>
+                    <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(180)"/>
+                    <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(240)"/>
+                    <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(300)"/>
+                </g>
+            </svg>
+            <div class="info-title">Breathe Please</div>
+            <div class="info-version">Version 1 Beta 9</div>
+            
+            <div class="info-text">
+                BreathePlease is designed to give you informative quotes to mitigate anxiety and overthinking. This is a fun experiment exploring the creative potential of AI.
+            </div>
+
+            <div class="settings-header">Settings</div>
+
+            <div class="theme-switch-wrapper">
+                <span class="mode-label" id="themeLabel">Theme: Dark</span>
+                <div class="volume-btn-group">
+                    <button class="vol-btn" id="themeBtnLight" onclick="setTheme('light')">Light</button>
+                    <button class="vol-btn active" id="themeBtnDark" onclick="setTheme('dark')">Dark</button>
+                    <button class="vol-btn" id="themeBtnBlue" onclick="setTheme('blue')">Blue</button>
+                    <button class="vol-btn" id="themeBtnGreen" onclick="setTheme('green')">Green</button>
+                </div>
+            </div>
+
+            <div class="theme-switch-wrapper">
+                <span class="mode-label" id="speedLabel">Animation Speed: 1 Cycle</span>
+                <label class="theme-switch" for="speedCheckbox">
+                    <input type="checkbox" id="speedCheckbox" onchange="toggleSpeed()">
+                    <div class="slider round"></div>
+                </label>
+            </div>
+
+            <div class="theme-switch-wrapper">
+                <span class="mode-label" id="fontLabel">Font: Crimson Text</span>
+                <div class="volume-btn-group">
+                    <button class="vol-btn active" id="fontBtnSerif" onclick="setFontStyle('serif')">Serif</button>
+                    <button class="vol-btn" id="fontBtnSans" onclick="setFontStyle('sans')">Sans-Serif</button>
+                </div>
+            </div>
+
+            <div class="theme-switch-wrapper">
+                <span class="mode-label" id="musicLabel">Music: Off</span>
+                <label class="theme-switch" for="musicCheckbox">
+                    <input type="checkbox" id="musicCheckbox" onchange="toggleMusicFromCheckbox()">
+                    <div class="slider round"></div>
+                </label>
+            </div>
+
+            <div class="theme-switch-wrapper">
+                <span class="mode-label">Volume</span>
+                <div class="volume-btn-group">
+                    <button class="vol-btn" id="volBtn1" onclick="setVolumeLevel(1)">Low</button>
+                    <button class="vol-btn active" id="volBtn2" onclick="setVolumeLevel(2)">Mid</button>
+                    <button class="vol-btn" id="volBtn3" onclick="setVolumeLevel(3)">High</button>
+                </div>
+            </div>
+
+            <div class="settings-header">Acknowledgements</div>
+            
+            <div class="theme-switch-wrapper">
+                <span class="mode-label">Authors</span>
+                <button class="view-btn" id="authorListBtn">View List</button>
+            </div>
+
+            <div class="info-footer">
+                Designed by <a href="mailto:writetobjd@gmail.com" class="creator-link">Bhaskarjyoti Das</a>
+                <br><br>
+                &copy; Copyright 2025
+            </div>
+        </div>
+    </div>
+
+    <div class="author-overlay" id="authorModal">
+        <div class="author-box">
+            <button class="close-modal" id="closeAuthorBtn">×</button>
+            <div class="info-title">Authors</div>
+            <div class="author-list-container" id="authorList"></div>
+        </div>
+    </div>
+    
+    <div class="lotus-container" id="mainLotus">
+        <svg class="lotus-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(50,50)">
+                <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(0)"/>
+                <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(60)"/>
+                <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(120)"/>
+                <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(180)"/>
+                <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(240)"/>
+                <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(300)"/>
+            </g>
+        </svg>
+    </div>
+
+    <div class="container">
+        <div class="quote-box">
+            <div class="quote-wrapper">
+                <div class="quote-text" id="quoteText" onclick="toggleFont()" title="Click text to change font">The greatest glory in living lies not in never falling, but in rising every time we fall.</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="quote-author" id="quoteAuthor">Nelson Mandela</div>
+
+    <div class="button-container">
+        <button class="inspire-btn" onclick="manualUpdate()">Inspire me</button>
+    </div>
+
+    <button class="sound-btn" id="soundBtn" onclick="toggleSoundState()">
+        <span class="pulse"></span><span id="soundBtnText">Play Sound</span>
+    </button>
+
+    <div class="sound-control" id="soundControl">
+        <button class="mute-btn" id="muteBtn" onclick="toggleMute()" title="Mute/Unmute">🔉</button>
+        <input type="range" id="volumeSlider" class="volume-slider" min="1" max="3" step="1" value="2" oninput="setVolumeLevel(this.value)">
+        <span class="sound-label" id="volumeLabel">Mid</span>
+    </div>
+
+    <audio id="track1" preload="auto" loop>
+        <source src="mantra-om.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="track2" preload="auto" loop>
+        <source src="mantra-om.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const quotes = [
+            { text: "The mind is everything. What you think, you become.", author: "Buddha" },
+            { text: "Between stimulus and response there is a space. In that space is our power to choose our response.", author: "Viktor Frankl" },
+            { text: "The ability to observe without evaluating is the highest form of intelligence.", author: "J. Krishnamurti" },
+            { text: "You can't stop the waves, but you can learn to surf.", author: "Jon Kabat-Zinn" },
+            { text: "I laugh when I hear that the fish in the water is thirsty.", author: "Kabir" },
+            { text: "The antidote to overthinking isn't thinking less. It's rethinking more.", author: "Adam Grant" },
+            { text: "There is nothing more important to true growth than realizing that you are not the voice of the mind — you are the one who hears it.", author: "Michael A. Singer" },
+            { text: "We suffer more in imagination than in reality.", author: "Seneca" },
+            { text: "Your worst enemy cannot harm you as much as your own unguarded thoughts.", author: "Gautama Buddha" },
+            { text: "Nothing in life is as important as you think it is, while you are thinking about it.", author: "Daniel Kahneman" },
+            { text: "The rich will make temples for Shiva. What shall I, a poor man, do? My legs are pillars, the body the shrine, the head a cupola of gold.", author: "Basavanna" },
+            { text: "The problem is not thoughts themselves but the state of thinking without knowing that we are thinking.", author: "Sam Harris" },
+            { text: "Rule your mind or it will rule you.", author: "Gautama Buddha" },
+            { text: "The brain is like Velcro for negative experiences but Teflon for positive ones.", author: "Rick Hanson" },
+            { text: "You have power over your mind, not outside events.", author: "Marcus Aurelius" },
+            { text: "It is no measure of health to be well adjusted to a profoundly sick society.", author: "J. Krishnamurti" },
+            { text: "Emotions are not reactions to the world; they are your constructions of the world.", author: "Lisa Feldman Barrett" },
+            { text: "Leave your front door and your back door open. Allow your thoughts to come and go. Just don't serve them tea.", author: "Shunryu Suzuki" },
+            { text: "Don't forget love; it will bring all the madness you need to unfurl yourself across the universe.", author: "Mirabai" },
+            { text: "Where attention goes, neural firing flows, and neural connection grows.", author: "Dr. Dan Siegel" },
+            { text: "The mind is like water. When turbulent, it's difficult to see. When it's calm, everything becomes clear.", author: "Confucius" },
+            { text: "Establishment in the Self is the only source of peace.", author: "Thakur Anukulchandra" },
+            { text: "Meditation is intermittent fasting for the mind.", author: "Naval Ravikant" },
+            { text: "Imperfection is not our personal problem — it is a natural part of existing.", author: "Tara Brach" },
+            { text: "The quieter you become, the more you can hear.", author: "Ram Dass" },
+            { text: "To understand the immeasurable, the mind must be extraordinarily quiet and still.", author: "J. Krishnamurti" },
+            { text: "Wherever you are, that's the entry point.", author: "Kabir" },
+            { text: "Mind is the Master power that moulds and makes.", author: "James Allen" },
+            { text: "You are the sky. Everything else – it's just the weather.", author: "Matt Haig" },
+            { text: "Don't believe everything you think.", author: "Unknown" },
+            { text: "Compare yourself to who you were yesterday, not to who someone else is today.", author: "Jordan Peterson" },
+            { text: "Analysis is paralysis.", author: "Unknown" },
+            { text: "Life begins where fear ends.", author: "Osho" },
+            { text: "Gratitude is the antidote to anxiety.", author: "Andrew Huberman" },
+            { text: "God resides in those hearts in which there is no hatred towards anyone, there is no greed or malice.", author: "Guru Ravidas" },
+            { text: "If a problem is fixable, there is no need to worry.", author: "Dalai Lama" },
+            { text: "He who has a why to live can bear almost any how.", author: "Friedrich Nietzsche" },
+            { text: "Worrying is like paying a debt you don't owe.", author: "Mark Twain" },
+            { text: "Anxiety is the handmaiden of contemporary ambition.", author: "Alain de Botton" },
+            { text: "Anxiety is the price of consciousness.", author: "Saul Bellow" },
+            { text: "Things standing shall fall, but the moving ever shall stay.", author: "Basavanna" },
+            { text: "Today I escaped anxiety. Or no, I discarded it, because it was within me.", author: "Marcus Aurelius" },
+            { text: "The voice in your head is a fast talker.", author: "Ethan Kross" },
+            { text: "Fear is a liar.", author: "Unknown" },
+            { text: "Almost everything will work again if you unplug it for a few minutes, including you.", author: "Anne Lamott" },
+            { text: "Do it afraid.", author: "Joyce Meyer" },
+            { text: "Freedom from fear is the first of all virtues.", author: "Swami Vivekananda" },
+            { text: "The present moment is the only moment available to us.", author: "Thich Nhat Hanh" },
+            { text: "Fear is a natural reaction to moving closer to the truth.", author: "Pema Chödrön" },
+            { text: "Slowly, slowly, O mind, everything happens at its own pace.", author: "Kabir" },
+            { text: "You are the world and the world is you.", author: "J. Krishnamurti" },
+            { text: "Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.", author: "Gautama Buddha" },
+            { text: "Nature does not hurry, yet everything is accomplished.", author: "Lao Tzu" },
+            { text: "Wherever you are, be there totally.", author: "Eckhart Tolle" },
+            { text: "Sitting silently, doing nothing, spring comes, and the grass grows by itself.", author: "Basho" },
+            { text: "When you walk, walk. When you eat, eat.", author: "Zen Proverb" },
+            { text: "Breathe. It's only a moment.", author: "Unknown" },
+            { text: "The greatest glory in living lies not in never falling, but in rising every time we fall.", author: "Nelson Mandela" },
+            { text: "Arise! Awake! And stop not until the goal is reached.", author: "Swami Vivekananda" },
+            { text: "Work without attachment is the beginning of spirituality.", author: "Ramakrishna Paramahamsa" },
+            { text: "Vulnerability is not winning or losing; it's having the courage to show up and be seen when we have no control over the outcome.", author: "Brené Brown" },
+            { text: "It is better to be an active fool than an idle wise!", author: "Thakur Anukulchandra" },
+            { text: "Whatever you do, do it with your whole body and mind; be like a good bonfire.", author: "Shunryu Suzuki" },
+            { text: "Words are the only jewels I possess.", author: "Tukaram" },
+            { text: "Detach from the outcome, not the action.", author: "Bhagavad Gita" },
+            { text: "The obstacle is the path.", author: "Zen Saying" },
+            { text: "Plan out your work and then work out your plan.", author: "Swami Chinmayananda" },
+            { text: "Be — don't try to become.", author: "Osho" },
+            { text: "Truth is a pathless land.", author: "J. Krishnamurti" },
+            { text: "You are not a drop in the ocean. You are the entire ocean in a drop.", author: "Rumi" },
+            { text: "If your heart is pure, the water in your wooden tub is holy water.", author: "Guru Ravidas" },
+            { text: "The privilege of a lifetime is to become who you truly are.", author: "Carl Jung" },
+            { text: "Stop acting so small. You are the universe in ecstatic motion.", author: "Rumi" },
+            { text: "Sell your cleverness and buy bewilderment.", author: "Rumi" },
+            { text: "The wound is the place where the Light enters you.", author: "Rumi" },
+            { text: "To love oneself is the beginning of a lifelong romance.", author: "Oscar Wilde" },
+            { text: "Lead me from the unreal to the real, from darkness to light.", author: "Brihadaranyaka Upanishad" },
+            { text: "It is not things that disturb us, but our interpretation of their significance.", author: "Epictetus" },
+            { text: "The greatest discovery of my generation is that human beings can alter their lives by altering their attitudes.", author: "William James" },
+            { text: "Change the way you look at things and the things you look at change.", author: "Wayne Dyer" },
+            { text: "Cleanse the mirror of your heart, and you will see God.", author: "Neem Karoli Baba" },
+            { text: "Acceptance is not submission; it is acknowledgment of the facts of a situation.", author: "Michael J. Fox" },
+            { text: "Suffering is not inflicted upon us; it is something we choose by our resistance to what is.", author: "Naval Ravikant" },
+            { text: "Give the ones you love wings to fly, roots to come back, and reasons to stay.", author: "Dalai Lama" },
+            { text: "Truth and virtue do not necessarily belong to wealth and power.", author: "Raja Ram Mohan Roy" },
+            { text: "He who regards all men as equals is religious.", author: "Guru Nanak Dev Ji" },
+            { text: "The river that flows in you also flows in me.", author: "Kabir" },
+            { text: "This too shall pass.", author: "Sufi Adage" },
+            { text: "One step at a time.", author: "Unknown" },
+            { text: "Be like water.", author: "Lao Tzu" },
+            { text: "Trust the timing of your life.", author: "Unknown" },
+            { text: "Simplicity is the key.", author: "Unknown" },
+            { text: "Brood less, smile more.", author: "Swami Chinmayananda" },
+            { text: "Your body keeps the score.", author: "Bessel van der Kolk" },
+            { text: "Regard all and everything as though they were God Himself.", author: "Srimanta Sankardeva" },
+            { text: "The true way to serve God is to do good to man.", author: "Raja Ram Mohan Roy" },
+            { text: "Sadness gives depth. Happiness gives height.", author: "Osho" },
+            { text: "Love all, serve all, feed all.", author: "Neem Karoli Baba" },
+            { text: "Just consider how terrible the day of your death will be. Others will go on speaking and you will not be able to argue back.", author: "Raja Ram Mohan Roy" },
+            { text: "Don't seek, don't search, don't ask, don't knock, don't demand – relax.", author: "Osho" },
+            { text: "First be, then have.", author: "Thakur Anukulchandra" },
+            { text: "I am the servant of the servant of the Lord.", author: "Srimanta Sankardeva (Dasya Bhava)" },
+            { text: "The superstitious practices which deform religion have nothing to do with the pure spirit of its dictates.", author: "Raja Ram Mohan Roy" },
+            { text: "What you seek is seeking you.", author: "Rumi" },
+            { text: "Other than You, I have no liberator.", author: "Srimanta Sankardeva" },
+            { text: "Don't be serious about life. It's just a play.", author: "Osho" },
+            { text: "Silence is sometimes the best answer.", author: "Dalai Lama" },
+            { text: "Ignorance is the root cause of all evil.", author: "Raja Ram Mohan Roy" },
+            { text: "Whoever works for God, his work will be done by itself.", author: "Neem Karoli Baba" },
+            { text: "It is better to be an active fool than an idle wise!", author: "Thakur Anukulchandra" },
+            { text: "Truth is the highest virtue, but higher still is truthful living.", author: "Guru Nanak" },
+            { text: "If you relax, it comes. If you relax, it is there.", author: "Osho" },
+            { text: "Conduct is the loud-speaker of character.", author: "Thakur Anukulchandra" },
+            { text: "Sleep is the best meditation.", author: "Dalai Lama" },
+            { text: "Work is the medicine for all maladies.", author: "Thakur Anukulchandra" },
+            { text: "Take up one idea. Make that one idea your life.", author: "Swami Vivekananda" },
+            { text: "Do your duty with one hand and hold onto God with the other.", author: "Ramakrishna Paramahamsa" },
+            { text: "Stop acting so small. You are the universe in ecstatic motion.", author: "Rumi" },
+            { text: "Introspect daily, detect diligently, negate ruthlessly.", author: "Swami Chinmayananda" },
+            { text: "Peace comes from within. Do not seek it without.", author: "Buddha" },
+            { text: "Strength is life, weakness is death.", author: "Swami Vivekananda" },
+            { text: "Sincerity is the key to success.", author: "Thakur Anukulchandra" },
+            { text: "He who has a why to live can bear almost any how.", author: "Friedrich Nietzsche" },
+            { text: "Every moment of life is a new beginning.", author: "Walt Whitman" },
+            { text: "Always rely on a happy mind alone.", author: "Atisha" },
+            { text: "Act without expectation.", author: "Lao Tzu" },
+            { text: "The quieter you become, the more you can hear.", author: "Ram Dass" },
+            { text: "Fear is a liar.", author: "Unknown" },
+            { text: "You are stronger than you know.", author: "Unknown" },
+            { text: "Feelings are just visitors.", author: "Mooji" },
+            { text: "One step at a time.", author: "Unknown" },
+            { text: "Peace begins with a smile.", author: "Mother Teresa" },
+            { text: "Less thinking, more living.", author: "S.R. Parish" },
+            { text: "Let it go.", author: "Unknown" },
+            { text: "You are not your thoughts.", author: "Unknown" },
+            { text: "Worry implies we don't trust.", author: "Unknown" },
+            { text: "Silence the noise.", author: "Unknown" },
+            { text: "Don't trip over what is behind you.", author: "Unknown" },
+            { text: "Focus on the now.", author: "Unknown" },
+            { text: "Think less, feel more.", author: "Osho" },
+            { text: "Be here now.", author: "Ram Dass" },
+            { text: "Wherever you are, be all there.", author: "Jim Elliot" },
+            { text: "Quiet the mind.", author: "Unknown" },
+            { text: "Inhale peace, exhale worry.", author: "Unknown" },
+            { text: "Nothing can harm you as much as your own unguarded thoughts.", author: "Gautama Buddha" },
+            { text: "Fight with your own self; what is the use of fighting the external foes?", author: "Lord Mahavir" },
+            { text: "Attachment and aversion are the root cause of Karma.", author: "Lord Mahavir" },
+            { text: "Conquer your mind, and you shall conquer the world.", author: "Guru Nanak Dev Ji" },
+            { text: "Why do you worry? The Creator who created you is taking care of you.", author: "Guru Nanak Dev Ji" },
+            { text: "The moment you fear, you are nobody.", author: "Swami Vivekananda" },
+            { text: "All power is within you; you can do anything and everything.", author: "Swami Vivekananda" },
+            { text: "We are what our thoughts have made us.", author: "Swami Vivekananda" },
+            { text: "For him who has conquered the mind, the mind is the best of friends.", author: "Lord Krishna (Bhagavad Gita)" },
+            { text: "He who is free from joy, envy, fear, and anxiety, is dear to Me.", author: "Lord Krishna (Bhagavad Gita)" },
+            { text: "You have a right to perform your duties, but you are not entitled to the fruits of your actions.", author: "Lord Krishna (Bhagavad Gita)" },
+            { text: "There is fear only when there is a second.", author: "Brihadaranyaka Upanishad" },
+            { text: "He who sees all beings in his own Self loses all fear.", author: "Isha Upanishad" },
+            { text: "When the mind is at peace, the world is at peace.", author: "Sage Vasistha" },
+            { text: "The enemy is not external. The enemy is your own mind that is uncontrolled.", author: "Adi Shankaracharya" },
+            { text: "The whole future lies in uncertainty: live immediately.", author: "Seneca" },
+            { text: "Man is not worried by real problems so much as by his imagined anxieties about real problems.", author: "Epictetus" },
+            { text: "The secret of health for both mind and body is... to live the present moment wisely.", author: "Gautama Buddha" },
+            { text: "Anger begets more anger, and forgiveness and love lead to more forgiveness and love.", author: "Lord Mahavir" },
+            { text: "Stand up, be bold, be strong. Take the whole responsibility on your own shoulders.", author: "Swami Vivekananda" },
+            { text: "Undoubtedly, the mind is difficult to curb and is restless, but it can be controlled.", author: "Lord Krishna (Bhagavad Gita)" },
+            { text: "The Self is not to be attained by the weak.", author: "Mundaka Upanishad" },
+            { text: "The world is nothing but a mere vibration of consciousness in space.", author: "Yoga Vasistha" },
+            { text: "Whatever you think, that you will be.", author: "Swami Vivekananda" },
+            { text: "He who conquers the self by the self is happy.", author: "Lord Mahavir" },
+            { text: "Dwell in peace in the home of your own being.", author: "Guru Nanak Dev Ji" },
+            { text: "If you are distressed by anything external, the pain is not due to the thing itself, but to your estimate of it.", author: "Marcus Aurelius" },
+            { text: "True happiness is to enjoy the present, without anxious dependence upon the future.", author: "Seneca" },
+            { text: "There is only one time when it is essential to awaken. That time is now.", author: "Gautama Buddha" },
+            { text: "Fear is death, fear is sin, fear is hell, fear is unrighteousness, fear is wrong life.", author: "Swami Vivekananda" },
+            { text: "When a man dwells on the pleasure of sense, attraction for them arises in him.", author: "Lord Krishna (Bhagavad Gita)" },
+            { text: "As the flowing rivers disappear in the sea, thus a wise man... goes to the divine Person.", author: "Mundaka Upanishad" },
+            { text: "Do not be led by others, Awaken your own mind.", author: "Atharva Veda" },
+            { text: "For the quiet mind, all human beings are sons and daughters.", author: "Maha Upanishad" },
+            { text: "Whatever appears in one's consciousness, that seems to come into being.", author: "Yoga Vasistha" },
+            { text: "The mind alone is the cause of bondage and liberation for human beings.", author: "Amrita Bindu Upanishad" },
+            { text: "Live and allow others to live; hurt no one.", author: "Lord Mahavir" },
+            { text: "Nanak, the whole world is in distress. He who believes in the Name becomes victorious.", author: "Guru Nanak Dev Ji" },
+            { text: "The more we come out and do good to others, the more our hearts will be purified.", author: "Swami Vivekananda" },
+            { text: "A person who is free from desires... he alone can attain real peace.", author: "Lord Krishna (Bhagavad Gita)" },
+            { text: "What disturbs men's minds is not events but their judgments on events.", author: "Epictetus" },
+            { text: "Very little is needed to make a happy life; it is all within yourself, in your way of thinking.", author: "Marcus Aurelius" },
+            { text: "Better than a thousand hollow words, is one word that brings peace.", author: "Gautama Buddha" },
+            { text: "Where there is love, there is no fear.", author: "Guru Nanak Dev Ji" },
+            { text: "Fill the brain with high thoughts, highest ideals, place them day and night before you.", author: "Swami Vivekananda" },
+            { text: "One who sees inaction in action, and action in inaction, is intelligent among men.", author: "Lord Krishna (Bhagavad Gita)" },
+            { text: "He who knows the bliss of the Brahman (Absolute Reality) fears nothing.", author: "Taittiriya Upanishad" },
+            { text: "He is a wise man who does not grieve for the things which he has not, but rejoices for those which he has.", author: "Epictetus" },
+            { text: "To be calm is the highest achievement of the self.", author: "Zen Proverb" },
+            { text: "Silence the angry man with love. Silence the ill-natured man with kindness.", author: "Gautama Buddha" },
+            { text: "Control the mind, cut off the senses, and you are a God; endure the mind and you are a slave.", author: "Swami Vivekananda" },
+            { text: "One's own self is the best friend of oneself.", author: "Lord Krishna (Bhagavad Gita)" },
+            { text: "Truth alone triumphs, not falsehood.", author: "Mundaka Upanishad" },
+            { text: "The world is a bridge; pass over it, but build no house upon it.", author: "Attributed to Jesus (Islamic Tradition)" },
+            { text: "Do not look back. Look forward!", author: "Swami Vivekananda" },
+            { text: "You are the Soul, free and eternal, ever free, ever blessed. Have faith enough and you will be free in a minute.", author: "Swami Vivekananda" },
+            { text: "The best spiritual discipline is to tame your own mind.", author: "Atisha" },
+            { text: "Smile, breathe, and go slowly.", author: "Thich Nhat Hanh" },
+            { text: "The greatest wealth is contentment.", author: "Atisha" },
+            { text: "It's not what happens to you, but how you react to it that matters.", author: "Epictetus" },
+            { text: "The impediment to action advances action.", author: "Marcus Aurelius" },
+            { text: "There is no way to happiness, happiness is the way.", author: "Thich Nhat Hanh" },
+            { text: "Generosity is the most natural outward expression of compassion.", author: "Dalai Lama" },
+            { text: "Muddy water is best cleared by leaving it alone.", author: "Alan Watts" },
+            { text: "Do not ponder the affairs of others.", author: "Atisha" },
+            { text: "Choose to be optimistic, it feels better.", author: "Dalai Lama" },
+            { text: "The time to practice is now.", author: "Tsongkhapa" },
+            { text: "Our own heart is our temple.", author: "Dalai Lama" },
+            { text: "When you let go of who you are, you become who you might be.", author: "Lao Tzu" },
+            { text: "A disciplined mind leads to happiness, and an undisciplined mind leads to suffering.", author: "Dalai Lama" },
+            { text: "Look within. Within is the fountain of good, and it will ever bubble up, if thou wilt ever dig.", author: "Marcus Aurelius" },
+            { text: "In the midst of chaos, there is also opportunity.", author: "Sun Tzu" },
+            { text: "What lies behind us and what lies before us are tiny matters compared to what lies within us.", author: "Ralph Waldo Emerson" },
+            { text: "The butterfly counts not months but moments, and has time enough.", author: "Rabindranath Tagore" },
+            { text: "The greatest discovery of my generation is that human beings can alter their lives by altering their attitudes.", author: "William James" },
+            { text: "Let yourself be silently drawn by the strange pull of what you really love.", author: "Rumi" },
+            { text: "We are dying from overthinking. We are slowly killing ourselves by drowning in our thoughts.", author: "Warsan Shire" },
+            { text: "A calm mind is a powerful mind.", author: "Amit Ray" },
+            { text: "Nothing is permanent except change.", author: "Heraclitus" },
+            { text: "The art of living is more like wrestling than dancing.", author: "Marcus Aurelius" },
+            { text: "I am not what happened to me. I am what I choose to become.", author: "Carl Jung" },
+            { text: "Life shrinks or expands in proportion to one's courage.", author: "Anaïs Nin" },
+            { text: "You don't have to control your thoughts. You just have to stop letting them control you.", author: "Dan Millman" },
+            { text: "The only way out is through.", author: "Robert Frost" },
+            { text: "Keep your heart light and your mind clear.", author: "Unknown" },
+            { text: "Bloom where you are planted.", author: "Mary Engelbreit" },
+            { text: "Breathe in peace, breathe out love.", author: "Unknown" },
+            { text: "To love oneself is the beginning of a lifelong romance.", author: "Oscar Wilde" },
+            { text: "We cannot direct the wind, but we can adjust our sails.", author: "Dolly Parton" },
+            { text: "Rest my mind, rest on the feet of the Lord; release the confusion.", author: "Srimanta Sankardeva (Borgeet)" },
+            { text: "The secret of change is to focus all of your energy not on fighting the old, but on building the new.", author: "Socrates" },
+            { text: "The capacity to be alone is the capacity to love. It may look paradoxical to you, but it's not.", author: "Osho" },
+            { text: "Your worst enemy cannot wish you more harm than your own unguarded thoughts.", author: "Buddha" },
+            { text: "Seek not to change the world. Rather, seek to love it.", author: "Thich Nhat Hanh" },
+            { text: "Tension is who you think you should be. Relaxation is who you are.", author: "Chinese Proverb" },
+            { text: "Energy flows where attention goes.", author: "James Redfield" },
+            { text: "The only person you are destined to become is the person you decide to be.", author: "Ralph Waldo Emerson" },
+            { text: "Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.", author: "Rumi" },
+            { text: "Sometimes the smallest things take up the most room in your heart.", author: "A.A. Milne" },
+            { text: "Being happy doesn't mean everything is perfect. It means you've decided to look beyond the imperfections.", author: "Unknown" },
+            { text: "Still waters run deep.", author: "Proverb" },
+            { text: "Your inner peace is worth more than winning any argument.", author: "Unknown" }
+        ];
+        
+        let availableQuotes = [];
+        let currentQuoteIndex = -1;
+        let fadeTimeout;
+        let isManualUpdate = false;
+        
+        let track1, track2;
+        let activeTrack = null;
+        let isGlobalPlaying = false;
+        let isCrossfading = false;
+        const CROSSFADE_TIME = 4; 
+        
+        const volumeMap = { 1: 0.1, 2: 0.3, 3: 0.5 };
+        const labelMap = { 1: "Low", 2: "Mid", 3: "High" };
+        let currentVolumeLevel = 2; 
+        let isMuted = false;
+
+        // --- NEW VARIABLES FOR SPEED TOGGLE ---
+        let updateInterval = 1; // 1 cycle by default
+        let cycleCounter = 0;
+
+        // Modal Logic
+        const infoBtn = document.getElementById('infoBtn');
+        const infoModal = document.getElementById('infoModal');
+        const closeBtn = document.getElementById('closeBtn');
+        const authorListBtn = document.getElementById('authorListBtn');
+        const authorModal = document.getElementById('authorModal');
+        const closeAuthorBtn = document.getElementById('closeAuthorBtn');
+        const mainLotus = document.getElementById('mainLotus'); // Select main lotus
+
+        // Open Info Panel logic used by both Info Btn and Main Lotus
+        function openInfoPanel(e) {
+            e.stopPropagation();
+            infoModal.classList.add('active');
+        }
+
+        infoBtn.addEventListener('click', openInfoPanel);
+        // Added Listener for Main Lotus
+        mainLotus.addEventListener('click', openInfoPanel);
+
+        closeBtn.addEventListener('click', (e) => { e.stopPropagation(); infoModal.classList.remove('active'); });
+        
+        // MODIFIED: Info Modal Click Logic
+        // Closes when clicking anywhere unless clicking on an interactive element
+        infoModal.addEventListener('click', (e) => { 
+            const isInteractive = e.target.closest('button') || 
+                                  e.target.closest('input') || 
+                                  e.target.closest('label') ||
+                                  e.target.closest('a');
+            if (!isInteractive) {
+                infoModal.classList.remove('active');
+            }
+        });
+
+        authorListBtn.addEventListener('click', (e) => { e.stopPropagation(); populateAuthorList(); authorModal.classList.add('active'); });
+        closeAuthorBtn.addEventListener('click', (e) => { e.stopPropagation(); authorModal.classList.remove('active'); });
+        authorModal.addEventListener('click', (e) => { if (e.target === authorModal) authorModal.classList.remove('active'); });
+
+        function populateAuthorList() {
+            const listContainer = document.getElementById('authorList');
+            const authors = [...new Set(quotes.map(q => q.author))].sort();
+            listContainer.innerHTML = '';
+            authors.forEach(author => {
+                const div = document.createElement('div');
+                div.className = 'author-item';
+                div.textContent = author;
+                listContainer.appendChild(div);
+            });
+        }
+
+        // --- NEW THEME SELECTOR LOGIC ---
+        function setTheme(mode) {
+            const body = document.body;
+            const themeLabel = document.getElementById('themeLabel');
+            
+            const btnLight = document.getElementById('themeBtnLight');
+            const btnDark = document.getElementById('themeBtnDark');
+            const btnBlue = document.getElementById('themeBtnBlue');
+            const btnGreen = document.getElementById('themeBtnGreen');
+            
+            // 1. Set the data attribute
+            if (mode === 'light') {
+                body.removeAttribute('data-theme');
+                themeLabel.textContent = "Theme: Light";
+            } else {
+                body.setAttribute('data-theme', mode);
+                themeLabel.textContent = "Theme: " + mode.charAt(0).toUpperCase() + mode.slice(1);
+            }
+            
+            // 2. Set Default Fonts based on Mode
+            if (mode === 'blue' || mode === 'green') {
+                setFontStyle('sans');
+            } else {
+                // Light or Dark -> Serif
+                setFontStyle('serif');
+            }
+            
+            // 3. Update Buttons
+            [btnLight, btnDark, btnBlue, btnGreen].forEach(btn => btn.classList.remove('active'));
+            
+            if (mode === 'light') btnLight.classList.add('active');
+            else if (mode === 'dark') btnDark.classList.add('active');
+            else if (mode === 'blue') btnBlue.classList.add('active');
+            else if (mode === 'green') btnGreen.classList.add('active');
+        }
+
+        // --- NEW FUNCTION FOR SPEED TOGGLE ---
+        function toggleSpeed() {
+            const checkbox = document.getElementById('speedCheckbox');
+            const label = document.getElementById('speedLabel');
+            if (checkbox.checked) {
+                updateInterval = 2;
+                label.textContent = "Animation Speed: 2 Cycles";
+            } else {
+                updateInterval = 1;
+                label.textContent = "Animation Speed: 1 Cycle";
+            }
+            // Reset counter so the next immediate full cycle triggers update if needed
+            cycleCounter = 0; 
+            
+            // Adjust fade timeout immediately to prevent bad timing issues
+            clearTimeout(fadeTimeout);
+            const fadeDelay = (12000 * updateInterval) - 2000;
+             if(!document.getElementById('quoteText').classList.contains('text-faded')) {
+                 fadeTimeout = setTimeout(fadeOutText, fadeDelay);
+             }
+        }
+
+        // --- UPDATED FONT TOGGLE LOGIC ---
+        function toggleFont() {
+            const text = document.getElementById('quoteText');
+            // Determine the target mode based on current state
+            const targetMode = text.classList.contains('sans-mode') ? 'serif' : 'sans';
+            setFontStyle(targetMode);
+        }
+        
+        function setFontStyle(mode) {
+            const text = document.getElementById('quoteText');
+            const author = document.getElementById('quoteAuthor');
+            const isCurrentlySans = text.classList.contains('sans-mode');
+            
+            // 1. If already in the requested mode, do nothing to prevent unnecessary blinking
+            if ((mode === 'sans' && isCurrentlySans) || (mode === 'serif' && !isCurrentlySans)) {
+                return;
+            }
+
+            // 2. Clear any pending auto-fades so the text doesn't vanish while we are changing it
+            clearTimeout(fadeTimeout);
+
+            // 3. Add 'fast-mode' to allow a quick (0.8s) fade instead of the slow (2s) breathe cycle
+            text.classList.add('fast-mode');
+            author.classList.add('fast-mode');
+            
+            // 4. Fade out the current text
+            fadeOutText();
+
+            // 5. Wait for the fade-out to complete (800ms matches CSS .fast-mode transition)
+            setTimeout(() => {
+                // Swap the font class while invisible
+                if (mode === 'sans') {
+                    text.classList.add('sans-mode');
+                } else {
+                    text.classList.remove('sans-mode');
+                }
+                
+                // Update the Settings UI buttons
+                updateFontUI();
+                
+                // Fade the text back in
+                fadeInText();
+                
+                // 6. Remove 'fast-mode' after the text is fully visible again
+                setTimeout(() => {
+                    text.classList.remove('fast-mode');
+                    author.classList.remove('fast-mode');
+                    
+                    // Note: The main loop (animationiteration) will automatically pick up 
+                    // the next fade cycle, so we don't need to manually reset fadeTimeout here.
+                }, 800);
+                
+            }, 800);
+        }
+
+        function updateFontUI() {
+            const text = document.getElementById('quoteText');
+            const label = document.getElementById('fontLabel');
+            const btnSerif = document.getElementById('fontBtnSerif');
+            const btnSans = document.getElementById('fontBtnSans');
+            
+            const isSans = text.classList.contains('sans-mode');
+            
+            if (isSans) {
+                label.textContent = "Font: Source Sans 3";
+                btnSans.classList.add('active');
+                btnSerif.classList.remove('active');
+            } else {
+                label.textContent = "Font: Crimson Text";
+                btnSerif.classList.add('active');
+                btnSans.classList.remove('active');
+            }
+        }
+
+        function setVolumeLevel(step) {
+            currentVolumeLevel = parseInt(step);
+            isMuted = false; 
+            updateVolumeUI();
+            if (activeTrack && !isCrossfading) {
+                const targetVol = volumeMap[currentVolumeLevel];
+                activeTrack.volume = targetVol;
+            }
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            updateVolumeUI();
+            updateSoundButtonState(); // Update main button state
+            if (activeTrack) {
+                activeTrack.volume = isMuted ? 0 : volumeMap[currentVolumeLevel];
+            }
+            if (track1) track1.muted = isMuted;
+            if (track2) track2.muted = isMuted;
+        }
+
+        // --- NEW FUNCTION FOR MUSIC TOGGLE ---
+        function toggleMusicFromCheckbox() {
+            const checkbox = document.getElementById('musicCheckbox');
+            // If checking the box (ON), and music is not playing or muted -> Play/Unmute
+            if (checkbox.checked) {
+                if (!isGlobalPlaying) {
+                    startAudio();
+                } else if (isMuted) {
+                    toggleMute();
+                }
+            } 
+            // If unchecking (OFF) -> Mute
+            else {
+                if (!isMuted && isGlobalPlaying) {
+                    toggleMute();
+                }
+            }
+            // Ensure UI Sync
+            updateVolumeUI();
+        }
+        
+        // Helper to sync the checkbox with current state
+        function updateMusicToggleUI() {
+            const checkbox = document.getElementById('musicCheckbox');
+            const label = document.getElementById('musicLabel');
+            
+            // Music is "ON" if it is playing AND not muted
+            const isMusicOn = isGlobalPlaying && !isMuted;
+            
+            checkbox.checked = isMusicOn;
+            label.textContent = isMusicOn ? "Music: On" : "Music: Off";
+        }
+
+        function updateVolumeUI() {
+            // Update all sliders in the UI (Settings + Popup if exists)
+            const popupSlider = document.getElementById('volumeSlider');
+            const label = document.getElementById('volumeLabel');
+            const muteBtn = document.getElementById('muteBtn');
+            
+            // Update New Button Group
+            const btns = [document.getElementById('volBtn1'), document.getElementById('volBtn2'), document.getElementById('volBtn3')];
+            
+            if (isMuted) {
+                muteBtn.textContent = '🔇'; 
+                if(label) label.textContent = 'Mute'; 
+                if(popupSlider) popupSlider.classList.add('disabled');
+                
+                // Disable/Fade buttons visually
+                btns.forEach(btn => btn.classList.add('disabled'));
+            } else {
+                muteBtn.textContent = '🔉'; 
+                if(label) label.textContent = labelMap[currentVolumeLevel]; 
+                if(popupSlider) {
+                    popupSlider.classList.remove('disabled'); 
+                    popupSlider.value = currentVolumeLevel;
+                }
+                
+                // Update buttons active state
+                btns.forEach((btn, index) => {
+                    btn.classList.remove('disabled');
+                    if ((index + 1) === currentVolumeLevel) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+            }
+            // Sync the Music Toggle
+            updateMusicToggleUI();
+        }
+
+        function toggleVolumeControl() {
+            const control = document.getElementById('soundControl');
+            control.classList.toggle('visible');
+        }
+        
+        // Renamed and logic updated for the new button
+        function updateSoundButtonState() {
+            const btn = document.getElementById('soundBtn');
+            const textSpan = document.getElementById('soundBtnText');
+            
+            if (isGlobalPlaying && !isMuted) {
+                btn.classList.add('active');
+                textSpan.textContent = "Sound playing. Click anywhere to mute";
+            } else {
+                btn.classList.remove('active');
+                textSpan.textContent = "Click anywhere to play sound";
+            }
+            // Also sync toggle if needed
+            updateMusicToggleUI();
+        }
+        
+        // New Function for Sound Button Logic
+        function toggleSoundState() {
+            if (!isGlobalPlaying) {
+                startAudio();
+            } else {
+                toggleMute();
+            }
+        }
+
+        function initAudio() {
+            track1 = document.getElementById('track1');
+            track2 = document.getElementById('track2');
+            track1.volume = volumeMap[currentVolumeLevel];
+            track2.volume = 0; 
+            track1.addEventListener('timeupdate', () => checkGaplessLoop(track1, track2));
+            track2.addEventListener('timeupdate', () => checkGaplessLoop(track2, track1));
+            activeTrack = track1;
+        }
+
+        function checkGaplessLoop(current, next) {
+            if (!isGlobalPlaying) return;
+            if (isCrossfading) return;
+            if (isNaN(current.duration)) return;
+            let timeLeft = current.duration - current.currentTime;
+            if (timeLeft <= CROSSFADE_TIME && timeLeft > 0) {
+                isCrossfading = true;
+                next.currentTime = 0; next.volume = 0;
+                next.play().catch(e => console.error("Gapless play failed", e));
+                performEqualPowerCrossfade(current, next);
+            }
+        }
+
+        function performEqualPowerCrossfade(outgoing, incoming) {
+            const intervalStep = 50; 
+            const steps = (CROSSFADE_TIME * 1000) / intervalStep;
+            let counter = 0;
+            const fadeInterval = setInterval(() => {
+                if (!isGlobalPlaying) { clearInterval(fadeInterval); isCrossfading = false; return; }
+                const maxVolNow = isMuted ? 0 : volumeMap[currentVolumeLevel];
+                let ratio = counter / steps; 
+                let gainIn = Math.sin(ratio * Math.PI / 2);
+                let gainOut = Math.cos(ratio * Math.PI / 2);
+                incoming.volume = maxVolNow * gainIn;
+                outgoing.volume = maxVolNow * gainOut;
+                counter++;
+                if (counter >= steps) {
+                    clearInterval(fadeInterval);
+                    outgoing.pause(); outgoing.currentTime = 0; outgoing.volume = 0; 
+                    incoming.volume = maxVolNow; activeTrack = incoming; isCrossfading = false;
+                }
+            }, intervalStep);
+        }
+
+        function startAudio() {
+            if (!track1 || !track2) initAudio();
+            isGlobalPlaying = true;
+            const startVol = isMuted ? 0 : volumeMap[currentVolumeLevel];
+            if (!activeTrack) activeTrack = track1;
+            activeTrack.volume = startVol;
+            activeTrack.play().then(() => {
+                updateSoundButtonState();
+            }).catch(e => {
+                console.log("Autoplay blocked, waiting for click");
+                isGlobalPlaying = false; 
+                updateSoundButtonState();
+            });
+        }
+
+        function handleBackgroundClick() {
+            if (!isGlobalPlaying) {
+                startAudio();
+            } else {
+                toggleMute();
+            }
+        }
+
+        function displayQuote() {
+            if (currentQuoteIndex === -1) return;
+            const quote = quotes[currentQuoteIndex];
+            const quoteText = document.getElementById('quoteText');
+            const quoteAuthor = document.getElementById('quoteAuthor');
+            const quoteBox = document.querySelector('.quote-box');
+            
+            quoteText.textContent = quote.text;
+            if (quote.author && quote.author.toLowerCase() !== 'unknown') {
+                quoteAuthor.textContent = quote.author; quoteAuthor.style.display = 'block'; quoteBox.classList.remove('no-author'); 
+            } else {
+                quoteAuthor.style.display = 'none'; quoteBox.classList.add('no-author'); 
+            }
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function refillQuotes() {
+            let pool = [];
+            for (let i = 0; i < quotes.length; i++) { pool.push(i); }
+            shuffleArray(pool);
+            availableQuotes = pool;
+            if (availableQuotes.length > 1 && currentQuoteIndex !== -1) {
+                const prevAuthor = quotes[currentQuoteIndex].author;
+                if (quotes[availableQuotes[0]].author === prevAuthor) {
+                    let temp = availableQuotes[0];
+                    availableQuotes[0] = availableQuotes[1];
+                    availableQuotes[1] = temp;
+                }
+            }
+        }
+
+        function getNewQuote() {
+            if (availableQuotes.length === 0) { refillQuotes(); }
+            const quoteIndex = availableQuotes.shift();
+            currentQuoteIndex = quoteIndex;
+            displayQuote();
+        }
+
+        function fadeOutText() {
+            document.getElementById('quoteText').classList.add('text-faded');
+            document.getElementById('quoteAuthor').classList.add('text-faded');
+        }
+
+        function fadeInText() {
+            document.getElementById('quoteText').classList.remove('text-faded');
+            document.getElementById('quoteAuthor').classList.remove('text-faded');
+        }
+
+        function manualUpdate() {
+            if(isManualUpdate) return; 
+            isManualUpdate = true;
+            // Reset cycle counter on manual update
+            cycleCounter = 0;
+            const text = document.getElementById('quoteText');
+            const author = document.getElementById('quoteAuthor');
+            text.classList.add('fast-mode'); author.classList.add('fast-mode');
+            fadeOutText();
+            setTimeout(() => {
+                getNewQuote(); fadeInText();
+                // Reset fade timer for manual update based on current interval
+                clearTimeout(fadeTimeout);
+                const fadeDelay = (12000 * updateInterval) - 2000;
+                fadeTimeout = setTimeout(fadeOutText, fadeDelay);
+                
+                setTimeout(() => {
+                    text.classList.remove('fast-mode'); author.classList.remove('fast-mode');
+                    isManualUpdate = false;
+                }, 800);
+            }, 800);
+        }
+
+        function updateTime() {
+            const timeDisplay = document.getElementById('timeDisplay');
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12; hours = hours ? hours : 12; 
+            timeDisplay.textContent = `${hours}:${minutes} ${ampm}`;
+        }
+
+        function updateDate() {
+            const dateDisplay = document.getElementById('dateDisplay');
+            const now = new Date();
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const dayName = days[now.getDay()];
+            const dayNum = String(now.getDate()).padStart(2, '0');
+            const monthName = months[now.getMonth()];
+            const year = now.getFullYear();
+            dateDisplay.textContent = `${dayName}, ${dayNum} ${monthName} ${year}`;
+        }
+        
+        window.addEventListener('load', function() {
+            updateDate();
+            updateTime(); 
+            getNewQuote(); 
+            initAudio(); 
+            
+            const bg = document.getElementById('breathingBg');
+            const lotus = document.querySelector('.lotus-container');
+            bg.classList.add('breathing-active');
+            lotus.classList.add('lotus-active');
+
+            startAudio(); 
+
+            setInterval(updateTime, 1000);
+            setInterval(updateSoundButtonState, 500);
+
+            // New Theme Buttons
+            document.getElementById('themeBtnLight').addEventListener('click', function(e) { e.stopPropagation(); });
+            document.getElementById('themeBtnDark').addEventListener('click', function(e) { e.stopPropagation(); });
+            document.getElementById('themeBtnBlue').addEventListener('click', function(e) { e.stopPropagation(); });
+            document.getElementById('themeBtnGreen').addEventListener('click', function(e) { e.stopPropagation(); });
+
+            document.getElementById('speedCheckbox').addEventListener('click', function(e) { e.stopPropagation(); });
+            
+            // New Font Buttons
+            document.getElementById('fontBtnSerif').addEventListener('click', function(e) { e.stopPropagation(); });
+            document.getElementById('fontBtnSans').addEventListener('click', function(e) { e.stopPropagation(); });
+            
+            // New Music Toggle
+            document.getElementById('musicCheckbox').addEventListener('click', function(e) { e.stopPropagation(); });
+            
+            // New Buttons Stop Propagation
+            document.getElementById('volBtn1').addEventListener('click', function(e) { e.stopPropagation(); });
+            document.getElementById('volBtn2').addEventListener('click', function(e) { e.stopPropagation(); });
+            document.getElementById('volBtn3').addEventListener('click', function(e) { e.stopPropagation(); });
+
+            // Stop propagation for sound button to prevent conflict
+            document.getElementById('soundBtn').addEventListener('click', function(e) { e.stopPropagation(); });
+
+            document.addEventListener('click', function(e) {
+                const isInspireButton = e.target.closest('.inspire-btn');
+                const isSoundControl = e.target.closest('.sound-control');
+                const isQuoteText = e.target.closest('.quote-text'); 
+                const isMuteBtn = e.target.closest('.mute-btn');
+                const isSlider = e.target.closest('.volume-slider');
+                const isThemeSwitch = e.target.closest('.theme-switch-wrapper');
+                const isAuthorBtn = e.target.closest('#authorListBtn');
+                
+                const isInfoBtn = e.target.closest('.info-btn');
+                const isInfoOverlay = e.target.closest('.info-overlay');
+                const isAuthorOverlay = e.target.closest('.author-overlay');
+                
+                // Also prevent background click when clicking the sound button itself
+                const isSoundBtn = e.target.closest('.sound-btn');
+                const isMainLotus = e.target.closest('.lotus-container');
+
+                if (isInspireButton || isSoundControl || isQuoteText || isMuteBtn || isSlider || isInfoBtn || isInfoOverlay || isThemeSwitch || isAuthorBtn || isAuthorOverlay || isSoundBtn || isMainLotus) {
+                    return;
+                }
+                
+                // Click on empty space -> mute/unmute
+                handleBackgroundClick();
+            });
+
+            // Set initial fade
+            const initialFadeDelay = (12000 * updateInterval) - 2000;
+            fadeTimeout = setTimeout(fadeOutText, initialFadeDelay); 
+
+            // Modified Animation Listener
+            bg.addEventListener('animationiteration', () => {
+                cycleCounter++;
+                if (cycleCounter >= updateInterval) {
+                    cycleCounter = 0; // Reset counter
+                    getNewQuote();
+                    fadeInText();
+                    clearTimeout(fadeTimeout);
+                    // Calc fade time: (12s * interval) - 2s (fade duration)
+                    const fadeDelay = (12000 * updateInterval) - 2000;
+                    fadeTimeout = setTimeout(fadeOutText, fadeDelay);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
