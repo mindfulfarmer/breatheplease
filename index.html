@@ -1,0 +1,2405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="Breathe Please - A minimalist mindfulness application.">
+    <title>Breathe Please</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><g transform=%22translate(50,50)%22 stroke=%22%230091EA%22 stroke-width=%223%22 fill=%22none%22><path d=%22M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0%22/><path d=%22M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0%22 transform=%22rotate(60)%22/><path d=%22M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0%22 transform=%22rotate(120)%22/><path d=%22M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0%22 transform=%22rotate(180)%22/><path d=%22M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0%22 transform=%22rotate(240)%22/><path d=%22M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0%22 transform=%22rotate(300)%22/></g></svg>">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@300;400;600&family=Source+Sans+3:wght@300;400;500&display=swap');
+        
+        :root {
+            /* --- FREEDOM MODE (Morning Energy: Bright & Peaceful) --- */
+            /* Background: Morning Mist Gradient (Crisp White to Soft Airy Blue) */
+            --bg-color: radial-gradient(circle at center, #FFFFFF 0%, #D1EAFF 100%);          
+            --text-color: #002838;  /* Deep Navy for readability */      
+            --subtle-text: #598596;       
+            
+            /* Accent: Daybreak Blue (Vibrant & Energetic) */
+            --accent-happy: #0091EA;      
+            --accent-text: #0077C2;       
+            
+            --btn-active-text: #FFFFFF;   
+            
+            /* UPDATED: Lower opacity for Frosty Effect */
+            --modal-bg: rgba(240, 250, 255, 0.65); 
+            
+            --modal-shadow: rgba(0, 145, 234, 0.12);
+            --modal-border: rgba(255, 255, 255, 0.5); /* Lighter border for glass */
+            
+            --btn-border: rgba(0, 145, 234, 0.3); 
+            --btn-hover-bg: rgba(0, 145, 234, 0.08);
+            
+            --ios-btn-bg: rgba(255, 255, 255, 0.5);
+            --ios-btn-border: rgba(0, 145, 234, 0.25);
+            --ios-btn-hover: #fff;
+            --ios-btn-text: #002838;
+
+            --control-bg: transparent; 
+            --control-active-bg: #FFFFFF;
+            
+            --timer-color: #598596;
+
+            /* --- 3D SPHERE (Freedom: Morning Dewdrop) --- */
+            /* High Gloss, Clean Whites, Fresh Cyans */
+            --sphere-highlight: rgba(255, 255, 255, 1.0); 
+            --sphere-tint: rgba(64, 196, 255, 0.5);       
+            --sphere-mid: rgba(0, 145, 234, 0.35);        
+            --sphere-shadow: rgba(1, 87, 155, 0.15);      
+            
+            /* Status Colors */
+            --status-red: #FF3B30;
+            --status-green: #34C759;
+        }
+
+        [data-theme="dark"] {
+            /* --- FOCUS MODE (Concentration & Depth) --- */
+            /* Background: Darker Galactic Void Gradient */
+            --bg-color: radial-gradient(circle at center, #240a36 0%, #050008 100%);          
+            --text-color: #F3E5F5;        
+            --subtle-text: #AA90B5;       
+            
+            /* Accent: Deep Royal Indigo */
+            --accent-happy: #6200EA;
+            --accent-text: #9D46FF; 
+            
+            --btn-active-text: #FFFFFF; 
+            
+            /* UPDATED: Lower opacity for Frosty Effect */     
+            --modal-bg: rgba(15, 5, 25, 0.65);
+            
+            --modal-shadow: rgba(0, 0, 0, 0.85);
+            --modal-border: rgba(98, 0, 234, 0.3);
+            
+            --btn-border: rgba(98, 0, 234, 0.5);
+            --btn-hover-bg: rgba(98, 0, 234, 0.2);
+
+            --ios-btn-bg: rgba(255, 255, 255, 0.08);
+            --ios-btn-border: rgba(98, 0, 234, 0.4);
+            --ios-btn-hover: rgba(255, 255, 255, 0.15);
+            --ios-btn-text: #F3E5F5;
+
+            --control-bg: transparent; 
+            --control-active-bg: #1A052A;
+            --timer-color: #AA90B5;
+
+            /* --- 3D SPHERE (Focus: Deep Amethyst) --- */
+            --sphere-highlight: rgba(200, 160, 255, 0.6); 
+            --sphere-tint: rgba(98, 0, 234, 0.5);      
+            --sphere-mid: rgba(40, 0, 80, 0.9);
+            --sphere-shadow: rgba(0, 0, 0, 1);
+            
+            --status-red: #FF453A;
+            --status-green: #32D74B;
+        }
+
+        [data-theme="blue"] {
+            /* --- PEACE MODE (Calm & Sleep) --- */
+            /* Background: Midnight Trench Gradient */
+            --bg-color: radial-gradient(circle at center, #0d2138 0%, #010205 100%);          
+            --text-color: #E1F5FE;        
+            --subtle-text: #81D4FA;       
+            
+            /* Accent: Neon Azure */
+            --accent-happy: #2196F3;      
+            --accent-text: #64B5F6; 
+            
+            --btn-active-text: #FFFFFF;  
+            
+            /* UPDATED: Lower opacity for Frosty Effect */    
+            --modal-bg: rgba(5, 12, 25, 0.65);
+            
+            --modal-shadow: rgba(0, 0, 0, 0.8);
+            --modal-border: rgba(33, 150, 243, 0.3);
+            
+            --btn-border: rgba(33, 150, 243, 0.5);
+            --btn-hover-bg: rgba(33, 150, 243, 0.2);
+            
+            --ios-btn-bg: rgba(255, 255, 255, 0.08);
+            --ios-btn-border: rgba(33, 150, 243, 0.4);
+            --ios-btn-hover: rgba(255, 255, 255, 0.15);
+            --ios-btn-text: #E1F5FE;
+
+            --control-bg: transparent; 
+            --control-active-bg: #0A182E;
+            --timer-color: #81D4FA;
+
+            /* --- 3D SPHERE (Peace: Sapphire Depth) --- */
+            --sphere-highlight: rgba(180, 230, 255, 0.7); 
+            --sphere-tint: rgba(33, 150, 243, 0.5);       
+            --sphere-mid: rgba(5, 50, 100, 0.8);          
+            --sphere-shadow: rgba(0, 0, 10, 1);          
+        }
+
+        [data-theme="green"] {
+            /* --- WISE MODE (Nature & Grounding) --- */
+            /* Background: Deep Crystalline Green Gradient */
+            --bg-color: radial-gradient(circle at center, #072e20 0%, #000502 100%);          
+            --text-color: #E0F2F1;        
+            --subtle-text: #69F0AE;       
+            
+            /* Accent: Mature Emerald/Jade */
+            --accent-happy: #00A86B;      
+            --accent-text: #69F0AE;  
+            
+            --btn-active-text: #001005;     
+            
+            /* UPDATED: Lower opacity for Frosty Effect */
+            --modal-bg: rgba(2, 25, 18, 0.65);
+            
+            --modal-shadow: rgba(0, 0, 0, 0.8);
+            --modal-border: rgba(0, 168, 107, 0.3);
+
+            --btn-border: rgba(0, 168, 107, 0.4);
+            --btn-hover-bg: rgba(0, 168, 107, 0.15);
+
+            --ios-btn-bg: rgba(255, 255, 255, 0.08);
+            --ios-btn-border: rgba(0, 168, 107, 0.3);
+            --ios-btn-hover: rgba(255, 255, 255, 0.15);
+            --ios-btn-text: #E0F2F1;
+
+            --control-bg: transparent; 
+            --control-active-bg: #032E1F;
+            --timer-color: #69F0AE;
+
+            /* --- 3D SPHERE (Wise: Solid Emerald) --- */
+            --sphere-highlight: rgba(200, 255, 220, 0.6); 
+            --sphere-tint: rgba(0, 168, 107, 0.5);       
+            --sphere-mid: rgba(0, 60, 40, 0.8);         
+            --sphere-shadow: rgba(0, 15, 5, 1);          
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            background: var(--bg-color); 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            position: relative;
+            color: var(--text-color); 
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+        
+        /* Background & Animation */
+        .breathing-bg {
+            position: fixed;
+            /* CENTER LOCKING */
+            top: 50%; 
+            left: 50%; 
+            /* 3D GLOSSY FROSTY SPHERE CSS */
+            width: 55vmin; height: 55vmin; 
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, 
+                var(--sphere-highlight) 0%,      
+                var(--sphere-tint) 20%,          
+                var(--sphere-mid) 60%,           
+                var(--sphere-shadow) 100%        
+            );
+            box-shadow: 
+                inset -20px -20px 60px var(--sphere-shadow), 
+                inset 10px 10px 30px var(--sphere-highlight),
+                inset 0 0 100px var(--sphere-mid),           
+                0 20px 60px var(--sphere-shadow);            
+            z-index: 0; 
+            pointer-events: none;
+            filter: blur(20px); 
+            transform: translate(-50%, -50%) scale(0.8);
+            opacity: 0.9; 
+            will-change: transform, opacity;
+            transition: background 0.5s ease, opacity 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .breathing-active { 
+            animation: breathe 12s cubic-bezier(0.45, 0, 0.55, 1) infinite; 
+        }
+        
+        /* DRAMATIC ANIMATION (0.6x to 3.2x) */
+        @keyframes breathe {
+            0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.5; }
+            33.333% { transform: translate(-50%, -50%) scale(3.2); opacity: 1; }
+            66.666% { transform: translate(-50%, -50%) scale(3.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.5; }
+        }
+
+        /* Interactive Liquid Ripple */
+        .ripple-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1; 
+        }
+
+        .ripple-wave {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            will-change: width, height, opacity, box-shadow;
+            border: 1px solid var(--sphere-highlight); 
+            box-shadow: 0 0 15px 2px var(--sphere-mid), inset 0 0 10px 0 var(--sphere-highlight); 
+            opacity: 0;
+            pointer-events: none;
+            animation: ripple-spread 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        @keyframes ripple-spread {
+            0% { width: 10px; height: 10px; opacity: 0.6; border-width: 2px; }
+            100% { width: 120vmax; height: 120vmax; opacity: 0; border-width: 0px; box-shadow: 0 0 50px 20px var(--sphere-shadow); }
+        }
+
+        /* --- HEADER LAYOUT --- */
+        .header {
+            padding: 40px 50px;
+            position: fixed; top: 0; left: 0; width: 100%;
+            height: 100px; 
+            z-index: 100;
+            display: flex; justify-content: space-between; align-items: center; 
+            transition: opacity 0.5s ease;
+        }
+        
+        /* UPDATED: Fixed size for ALL Main Screen Button Icons (including Sound) */
+        .fullscreen-btn svg, 
+        .info-icon svg,
+        .sound-icon,
+        .mode-icon svg { 
+            width: 24px; 
+            height: 24px; 
+            fill: currentColor; 
+        }
+
+        /* Maintain clamp for settings panel icon to avoid shrinking it accidentally */
+        .setting-icon svg {
+             width: clamp(24px, 5vw, 28px); 
+             height: clamp(24px, 5vw, 28px); 
+        }
+
+        .sound-icon {
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes button-breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+        
+        /* UPDATED: Main Screen Buttons Uniform Styles (Opacity 0.35) */
+        .fullscreen-btn, 
+        .info-btn,
+        .sound-btn,
+        .mode-icon-btn {
+            background: none; 
+            border: none; 
+            cursor: pointer; 
+            color: var(--subtle-text); 
+            opacity: 0.35; /* NEW DEFAULT OPACITY */
+            transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center;
+            padding: 6px; 
+            width: 40px; height: 40px; 
+            /* Ensure Mode Icon Btn resets */
+            border-radius: 50%;
+        }
+
+        .fullscreen-btn:hover,
+        .info-btn:hover,
+        .sound-btn:hover,
+        .mode-icon-btn:hover { 
+            color: var(--accent-happy); 
+            opacity: 1; 
+            animation: button-breathe 3s ease-in-out infinite; 
+            /* Ensure mode button hover bg logic is preserved or reset if desired */
+            background: var(--btn-hover-bg);
+        }
+        
+        .fullscreen-btn:hover, .info-btn:hover { background: none; } /* keep top buttons clean */
+
+        /* Icon Switcher Logic */
+        .fullscreen-btn .icon-compress { display: none; }
+        .fullscreen-btn .icon-expand { display: block; }
+        
+        body.fullscreen-active .fullscreen-btn .icon-expand { display: none; }
+        body.fullscreen-active .fullscreen-btn .icon-compress { display: block; }
+
+        /* SOUND ICON TOGGLE LOGIC */
+        .sound-btn .icon-mute { display: none; }
+        .sound-btn.muted-state .icon-mute { display: block; }
+        .sound-btn.muted-state .icon-sound { display: none; }
+        /* Disable animation when muted */
+        .sound-btn.muted-state .sound-icon { animation: none !important; filter: none !important; }
+
+        .app-title-header {
+            position: absolute;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Asap', sans-serif;
+            font-size: 0.85rem; 
+            font-weight: 400; 
+            color: var(--subtle-text); 
+            opacity: 0.5; 
+            letter-spacing: 0.5px;
+            user-select: none;
+            transition: opacity 0.5s ease;
+            white-space: nowrap;
+            z-index: 101; 
+            text-shadow: 0 0 20px var(--bg-color); 
+            cursor: pointer; 
+        }
+        .app-title-header:hover { opacity: 1; }
+
+        body.fullscreen-active .bottom-bar,
+        body.fullscreen-active .sound-control,
+        body.fullscreen-active .app-title-header {
+            opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
+        }
+        
+        body.fullscreen-active .fullscreen-btn, 
+        body.fullscreen-active .info-btn { 
+            opacity: 0.5; 
+            pointer-events: auto;
+        }
+        body.fullscreen-active .fullscreen-btn:hover,
+        body.fullscreen-active .info-btn:hover { opacity: 1; }
+
+        /* GRAPHIC MODE LOGIC */
+        .graphic-mode .quote-box,
+        .graphic-mode .timer-container,
+        .graphic-mode .breath-cycle-text {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Modals */
+        .info-overlay, .author-overlay, .intro-overlay, .disclaimer-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.2); 
+            /* This is the background overlay blur, kept distinct from the box blur */
+            backdrop-filter: blur(5px); 
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 200; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .info-overlay.active, .author-overlay.active, .disclaimer-overlay.active { opacity: 1; pointer-events: all; }
+        
+        .intro-overlay { 
+            z-index: 300; background: var(--bg-color); backdrop-filter: none; 
+            opacity: 1; pointer-events: all; 
+            transition: opacity 1.5s ease, filter 1.5s ease, transform 1.5s ease; 
+            filter: blur(0px); transform: scale(1);
+        }
+        .intro-overlay.hidden { opacity: 0; pointer-events: none; filter: blur(15px); transform: scale(1.05); }
+
+        /* UPDATED: Frosty Glass Panel Style */
+        .info-box, .author-box, .intro-box, .disclaimer-box {
+            background: var(--modal-bg);
+            /* KEY UPDATE: Backdrop filter added directly to boxes */
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
+            
+            border-radius: 24px;
+            box-shadow: 0 15px 50px var(--modal-shadow); 
+            width: min(650px, 88vw); 
+            max-height: 90svh; 
+            text-align: center;
+            transform: translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
+            position: relative; border: 1px solid var(--modal-border);
+            display: flex; flex-direction: column; overflow: hidden; padding: 0; 
+        }
+        
+        .info-overlay.active .info-box, 
+        .author-overlay.active .author-box,
+        .intro-overlay .intro-box,
+        .disclaimer-overlay.active .disclaimer-box { transform: translateY(0); }
+
+        /* Panel Structure - Optimized for "Seamless Look" */
+        .panel-header {
+            padding: 30px 30px 10px 30px; 
+            flex-shrink: 0; 
+        }
+        
+        .panel-scrollable-content {
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 5px 30px; 
+            -webkit-overflow-scrolling: touch;
+        }
+        .panel-scrollable-content::-webkit-scrollbar { width: 4px; }
+        .panel-scrollable-content::-webkit-scrollbar-thumb { background-color: var(--subtle-text); border-radius: 4px; }
+        
+        .panel-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+            padding: 20px 30px 30px 30px; 
+            flex-shrink: 0; 
+            background: transparent;
+            z-index: 2;
+        }
+
+        .footer-left {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .footer-right {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .intro-box {
+            padding: clamp(40px, 8vmin, 80px);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            width: min(550px, 88vw); max-height: 90svh; overflow-y: auto; 
+        }
+
+        .author-box, .disclaimer-box { padding: 0; }
+        
+        /* UPDATED: Modal Text Containers with Light Background & Scrollbar */
+        .author-list-container, .disclaimer-content {
+            overflow-y: auto; 
+            margin: 10px 20px 20px 20px;
+            padding: 25px;
+            text-align: left; 
+            flex: 1;
+            /* NEW STYLES for Legibility */
+            background-color: rgba(255, 255, 255, 0.85); 
+            color: #000000;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        /* Custom Scrollbar for Modal Text Containers */
+        .author-list-container::-webkit-scrollbar, 
+        .disclaimer-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .author-list-container::-webkit-scrollbar-track,
+        .disclaimer-content::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+        .author-list-container::-webkit-scrollbar-thumb,
+        .disclaimer-content::-webkit-scrollbar-thumb {
+            background-color: var(--accent-happy);
+            border-radius: 10px;
+        }
+        
+        .author-box .info-title, .disclaimer-box .info-title {
+            margin-top: clamp(35px, 6vmin, 50px);
+            margin-bottom: 20px;
+        }
+
+        .author-item {
+            font-family: 'Crimson Pro', serif; font-size: 1.1rem;
+            color: #000000; padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .author-item:last-child { border-bottom: none; }
+
+        .disclaimer-content h3 { font-family: 'Source Sans 3', sans-serif; font-size: 1em; margin-top: 25px; margin-bottom: 10px; color: #000000; font-weight: 600; }
+        .disclaimer-content h3:first-child { margin-top: 0; }
+        .disclaimer-content p { font-family: 'Crimson Pro', serif; font-size: 1.1rem; color: #000000; line-height: 1.6; margin-bottom: 15px; padding: 0; text-align: left; }
+
+        .info-logo {
+            margin: 0 auto 10px auto; display: block; fill: none; 
+            stroke: var(--accent-happy); stroke-width: 2.5;
+            stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.5s ease;
+            animation: lotus-spin 30s linear infinite;
+        }
+        .intro-box .info-logo { width: clamp(80px, 18vmin, 110px); height: clamp(80px, 18vmin, 110px); margin-bottom: clamp(30px, 6vmin, 50px); stroke-width: 2; }
+        .info-box .info-logo { width: 36px; height: 36px; margin-bottom: 6px; }
+
+        .info-title { font-family: 'Asap', sans-serif; font-size: 1.5em; color: var(--text-color); margin-bottom: 2px; font-weight: 600; }
+        /* VERSION TEXT CSS */
+        .info-version { font-family: 'Inter', sans-serif; font-size: 0.6em; color: var(--subtle-text); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; font-weight: 500; display: block; }
+        
+        .about-text-small {
+            font-family: 'Inter', sans-serif; 
+            font-size: 0.9rem; 
+            color: var(--subtle-text); 
+            line-height: 1.6; 
+            margin-bottom: 5px; 
+            margin-top: 5px;
+            text-align: center; 
+            opacity: 0.9;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .intro-main-text { 
+            font-family: 'Inter', sans-serif; 
+            font-size: clamp(0.8rem, 2.5vw, 0.95rem); 
+            color: var(--text-color); 
+            line-height: 1.7; 
+            margin-top: 0; 
+            margin-bottom: clamp(20px, 4vmin, 30px); 
+            padding: 0 clamp(10px, 3vw, 20px); 
+            font-weight: 400; 
+            max-width: 600px; 
+        }
+        
+        .intro-box .info-title {
+            color: var(--accent-happy); 
+            font-size: clamp(2rem, 5vw, 2.8rem); 
+            margin-bottom: 24px; 
+        }
+
+        .intro-tweak-text {
+            font-family: 'Inter', sans-serif; font-size: clamp(0.75rem, 2.5vw, 0.9rem); 
+            color: var(--subtle-text); line-height: 1.6; 
+            margin-bottom: clamp(40px, 8vmin, 60px); padding: 0 clamp(10px, 3vw, 20px); 
+            font-weight: 400; max-width: 600px; opacity: 0.8;
+        }
+
+        .splash-actions { display: flex; flex-direction: column; align-items: center; gap: clamp(25px, 5vmin, 40px); margin-top: 0; width: 100%; }
+        
+        .splash-btn-group {
+            display: flex; gap: 20px;
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .splash-checkbox-wrapper { display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .splash-label { font-family: 'Inter', sans-serif; font-size: 0.8em; color: var(--subtle-text); font-weight: 400; }
+
+        .start-btn {
+            background: var(--ios-btn-bg);
+            border: 1px solid var(--ios-btn-border);
+            color: var(--ios-btn-text);
+            padding: 10px 28px; 
+            border-radius: 50px;
+            cursor: pointer; font-family: 'Inter', sans-serif; 
+            font-size: 0.9rem; 
+            font-weight: 400; 
+            transition: all 0.3s ease; 
+            min-width: 140px;
+            backdrop-filter: blur(12px);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .start-btn:hover { 
+            background: var(--accent-happy); 
+            color: #FFFFFF; 
+            border-color: var(--accent-happy);
+            transform: scale(1.03);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            animation: button-breathe 3s ease-in-out infinite;
+        }
+
+        /* Mode Icon Button Specifics */
+        .mode-icon-btn {
+            backdrop-filter: blur(4px);
+        }
+        .mode-icon-btn:active { transform: scale(0.96); }
+
+        .mode-icon {
+            /* Width/Height now handled by svg rule above */
+            display: none; 
+        }
+        
+        .info-footer-text { 
+            font-size: clamp(0.7rem, 2vmin, 0.75rem); color: var(--subtle-text); 
+            font-weight: 500; text-transform: none; letter-spacing: 0.5px; line-height: 1.6; 
+        }
+
+        .creator-link {
+            color: var(--accent-text); text-decoration: none;
+            border-bottom: 1px dotted var(--accent-text); transition: all 0.3s ease;
+        }
+        .creator-link:hover { color: var(--accent-happy); border-color: var(--accent-happy); opacity: 0.8; }
+
+        .close-modal {
+            position: absolute; top: 15px; right: 15px; background: none; border: none;
+            cursor: pointer; color: var(--subtle-text); font-size: 24px; line-height: 1;
+            transition: color 0.2s; padding: 5px; z-index: 10;
+        }
+        .close-modal:hover { color: var(--text-color); }
+
+        .settings-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px; 
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .setting-row {
+            display: grid;
+            grid-template-columns: clamp(120px, 30vw, 150px) 1fr; 
+            align-items: center;
+            gap: 15px; 
+            background: transparent;
+            transition: opacity 0.4s ease;
+            min-height: 38px; 
+        }
+        
+        .setting-row.disabled-row {
+            opacity: 0.3; 
+            pointer-events: none;
+            filter: grayscale(100%);
+        }
+        
+        .setting-label {
+            font-size: 0.75rem;
+            color: var(--subtle-text); 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+            text-align: left;
+            white-space: nowrap;
+            display: flex; align-items: center; gap: 8px;
+        }
+        
+        .toggle-group {
+            display: flex;
+            gap: 6px; 
+            width: 100%;
+            flex-wrap: wrap; 
+        }
+
+        .toggle-btn {
+            flex: 1;
+            height: 28px; 
+            font-size: 0.7rem; 
+            padding: 0 8px;
+            background: transparent; 
+            border: 1px solid var(--btn-border); 
+            color: var(--subtle-text); 
+            border-radius: 50px; 
+            cursor: pointer; 
+            font-family: 'Inter', sans-serif; 
+            font-weight: 400; 
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        .toggle-btn:hover { 
+            background: var(--btn-hover-bg);
+            color: var(--accent-text); 
+            border-color: var(--accent-happy);
+            transform: scale(1.02);
+            box-shadow: 0 0 5px var(--btn-hover-bg);
+        }
+        
+        .toggle-btn.active {
+            background: var(--btn-hover-bg); 
+            color: var(--text-color);
+            border-color: var(--accent-happy);
+            font-weight: 600;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        
+        /* UPDATED: OFF BUTTONS (RED & GLOWING) */
+        .toggle-btn.active#trackBtnOff,
+        .toggle-btn.active#bellBtnOff {
+            color: var(--status-red);
+            border-color: var(--status-red);
+            background: rgba(255, 59, 48, 0.1); 
+            box-shadow: 0 0 8px rgba(255, 59, 48, 0.3);
+        }
+        
+        /* UPDATED: ON BUTTONS (GREEN & GLOWING) */
+        .toggle-btn.active#trackBtnOn,
+        .toggle-btn.active#bellBtnOn {
+            color: var(--status-green);
+            border-color: var(--status-green);
+            background: rgba(52, 199, 89, 0.1); 
+            box-shadow: 0 0 8px rgba(52, 199, 89, 0.3);
+        }
+        
+        .toggle-btn.disabled {
+             opacity: 0.5; pointer-events: none;
+        }
+        
+        /* THEME BUTTON COLORS - UPDATED TO GRADIENTS */
+        /* Freedom: Sky Blue Gradient */
+        #themeBtnLight { 
+            background: linear-gradient(135deg, #40C4FF 0%, #0091EA 100%); 
+            color: #FFFFFF; 
+            border: none; font-weight: 600; 
+        }
+        /* Focus: Deep Purple Gradient */
+        #themeBtnDark  { 
+            background: linear-gradient(135deg, #9D46FF 0%, #6200EA 100%); 
+            color: #FFFFFF; 
+            border: none; font-weight: 500; 
+        }
+        /* UPDATED: Peace: Darker Desaturated Blue Grey Gradient */
+        #themeBtnBlue  { 
+            background: linear-gradient(135deg, #455A64 0%, #263238 100%); 
+            color: #FFFFFF; 
+            border: none; font-weight: 500; 
+        }
+        /* Wise: Emerald Green Gradient */
+        #themeBtnGreen { 
+            background: linear-gradient(135deg, #69F0AE 0%, #00A86B 100%); 
+            color: #001005; /* Very dark green/black for contrast */
+            border: none; font-weight: 600; 
+        }
+        
+        .toggle-btn.active#themeBtnLight,
+        .toggle-btn.active#themeBtnDark,
+        .toggle-btn.active#themeBtnBlue,
+        .toggle-btn.active#themeBtnGreen {
+             box-shadow: 0 4px 12px rgba(0,0,0,0.2), inset 0 0 0 2px rgba(255,255,255,0.2);
+             transform: scale(1.03);
+        }
+
+        #fontBtnSerif { font-family: 'Crimson Text', serif; font-size: 1rem; }
+        #fontBtnSans  { font-family: 'Source Sans 3', sans-serif; font-weight: 400; }
+        
+        .waveform-icon { display: none; alignItems: flex-end; gap: 2px; height: 10px; margin-left: 2px; }
+        #trackBtnOn.active .waveform-icon, 
+        #bellBtnOn.active .waveform-icon { display: inline-flex; color: currentColor; }
+
+        .waveform-icon span { display: block; width: 2px; background-color: currentColor; animation: wave 1s ease-in-out infinite; }
+        .waveform-icon span:nth-child(1) { height: 6px; animation-delay: 0s; }
+        .waveform-icon span:nth-child(2) { height: 10px; animation-delay: 0.1s; }
+        .waveform-icon span:nth-child(3) { height: 7px; animation-delay: 0.2s; }
+
+        @keyframes wave { 0%, 100% { height: 4px; } 50% { height: 100%; } }
+        
+        .btn-icon { width: 14px; height: 14px; }
+        /* Settings icon in panel retains variable sizing */
+        
+        @keyframes icon-breathe-subtle { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        @keyframes icon-rotate-slow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        #modeSwitchBtn .book-icon svg { animation: icon-breathe-subtle 4s ease-in-out infinite; }
+        
+        /* Sphere Icon now breathes like the Book Icon */
+        #modeSwitchBtn .sphere-icon svg { animation: icon-breathe-subtle 4s ease-in-out infinite; }
+        
+        .line-control {
+            display: flex; align-items: center; justify-content: space-between;
+            position: relative; width: 100%; height: 28px; padding: 0;
+        }
+        
+        .line-track {
+            position: absolute; top: 50%; left: 10px; right: 10px;
+            height: 1px; background: var(--subtle-text); opacity: 0.3;
+            transform: translateY(-50%); z-index: 0;
+        }
+
+        .footer-action-btn {
+            padding: 6px 16px; font-size: 0.7rem; background: transparent; 
+            border: 1px solid var(--modal-border); color: var(--subtle-text); 
+            border-radius: 50px; cursor: pointer; font-family: 'Inter', sans-serif; 
+            font-weight: 500; transition: all 0.3s ease; letter-spacing: 0.5px;
+            text-align: center;
+        }
+        .footer-action-btn:hover { border-color: var(--accent-happy); color: var(--text-color); background: var(--btn-hover-bg); }
+
+        .theme-switch { position: relative; display: inline-block; width: 34px; height: 18px; }
+        .theme-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; }
+        .slider:before { position: absolute; content: ""; height: 12px; width: 12px; left: 3px; bottom: 3px; background-color: white; transition: .4s; }
+        input:checked + .slider { background-color: var(--accent-happy); }
+        input:focus + .slider { box-shadow: 0 0 1px var(--accent-happy); }
+        input:checked + .slider:before { transform: translateX(16px); }
+        .slider.round { border-radius: 34px; }
+        .slider.round:before { border-radius: 50%; }
+
+        .lotus-container {
+            position: absolute; top: 22%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 5; opacity: 0.9; pointer-events: auto; cursor: pointer; transition: opacity 0.3s;
+        }
+        .lotus-container:hover { opacity: 0.8; }
+        .lotus-active { animation: lotus-breathe 12s ease-in-out infinite; }
+        .lotus-icon { width: 40px; height: 40px; fill: none; stroke: var(--accent-happy); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; animation: lotus-spin 30s linear infinite; }
+        @keyframes lotus-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .sound-control {
+            position: fixed; bottom: 90px; left: 50px; z-index: 100;
+            display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+            background: var(--modal-bg); backdrop-filter: blur(5px);
+            border-radius: 8px; box-shadow: 0 4px 20px var(--modal-shadow);
+            opacity: 0; pointer-events: none; transform: translateY(10px);
+            transition: all 0.3s ease; font-family: 'Inter', sans-serif;
+            border: 1px solid var(--modal-border);
+        }
+        .sound-control.visible { opacity: 1; pointer-events: all; transform: translateY(0); }
+        .sound-label { font-size: 10px; color: var(--subtle-text); font-family: 'Inter', sans-serif; font-weight: 500; min-width: 35px; text-align: left; }
+        .mute-btn { font-size: 16px; min-width: 24px; text-align: center; color: var(--subtle-text); cursor: pointer; background: none; border: none; display: flex; align-items: center; justify-content: center; transition: transform 0.1s; }
+        .mute-btn:active { transform: scale(0.9); }
+        
+        .sound-btn.playing .sound-icon { fill: var(--accent-happy); filter: drop-shadow(0 0 8px var(--accent-happy)); animation: icon-pulse-glow 1.5s ease-in-out infinite; }
+        @keyframes icon-pulse-glow { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px var(--accent-happy)); opacity: 1; } 50% { transform: scale(1.15); filter: drop-shadow(0 0 12px var(--accent-happy)); opacity: 0.8; } }
+        
+        .container { flex: 1; position: relative; width: 100%; overflow: hidden; z-index: 10; pointer-events: none; }
+        
+        /* UPDATED: FIXED CENTER LOCKING FOR TEXT - 10px offset */
+        .quote-box { 
+            position: fixed; /* Locked to viewport */
+            top: calc(50% + 32px); /* Moved down 30px from true center */
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            text-align: center; 
+            max-width: 1000px; 
+            width: 100%; 
+            padding: 0 48px; 
+            pointer-events: auto; 
+            z-index: 10; /* Above Sphere(0) and Ripple(1), below Modals(200) */
+        }
+        .quote-box.no-author { top: 50%; }
+        .quote-wrapper { position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        
+        .quote-text.fs-2 { font-size: clamp(1.5rem, 3.2vw, 2.8rem); }
+        .quote-text.fs-2.sans-mode { font-size: clamp(1.5rem, 3vw, 2.6rem); }
+        .quote-text.fs-1 { font-size: clamp(1.1rem, 2.5vw, 2.0rem); }
+        .quote-text.fs-1.sans-mode { font-size: clamp(1.1rem, 2.3vw, 1.9rem); }
+        .quote-text.fs-3 { font-size: clamp(2.0rem, 4.5vw, 3.8rem); }
+        .quote-text.fs-3.sans-mode { font-size: clamp(2.0rem, 4.3vw, 3.6rem); }
+
+        .quote-text {
+            font-family: 'Crimson Text', 'Crimson Pro', serif; 
+            font-weight: 400; color: var(--text-color); padding: 0 50px; 
+            line-height: 1.5em; margin: 0;
+            transition: opacity 0.5s ease, font-family 0.3s ease, color 0.5s ease, font-size 0.5s ease; 
+            opacity: 1; text-shadow: 0 1px 0 rgba(255,255,255,0.1); 
+            user-select: none; word-spacing: 0.5px; cursor: pointer; 
+        }
+        
+        .quote-text.sans-mode { font-family: 'Source Sans 3', sans-serif; font-weight: 400; letter-spacing: 0px; line-height: 1.5em; }
+        .quote-text.force-sans { font-family: 'Source Sans 3', sans-serif !important; font-weight: 300 !important; letter-spacing: 0px; }
+        
+        /* UPDATED: Uses Source Sans 3 for the breathing text */
+        .breathe-text-large { 
+            font-family: 'Source Sans 3', sans-serif !important; 
+            font-size: clamp(3rem, 10vw, 5rem) !important; 
+            font-weight: 300 !important; 
+        }
+        
+        .quote-text.breathe-mode-active { opacity: 0.5 !important; transition: none !important; }
+        
+        [data-theme="dark"] .quote-text.sans-mode,
+        [data-theme="blue"] .quote-text.sans-mode,
+        [data-theme="green"] .quote-text.sans-mode { font-weight: 300; }
+        
+        .quote-author {
+            /* REPLACED Absolute Positioning with Relative Logic for Better Sync */
+            position: relative; 
+            /* INCREASED MARGIN for substantial spacing */
+            margin-top: 8vh; 
+            width: 100%; text-align: center;
+            font-size: 0.75em; color: var(--subtle-text); font-style: normal; font-family: 'Inter', sans-serif; font-weight: 400; letter-spacing: 1px; text-transform: uppercase;
+            /* Transition handled by animation loop logic mostly */
+            opacity: 0; 
+            z-index: 10;
+        }
+        
+        /* Helper class for immediate hiding */
+        .instant-hide {
+            opacity: 0 !important;
+            transition: none !important;
+        }
+
+        .text-faded { opacity: 0 !important; }
+        
+        /* --- BOTTOM BAR --- */
+        .bottom-bar {
+            position: fixed; bottom: 40px; bottom: calc(40px + env(safe-area-inset-bottom));
+            left: 50px; right: 50px; display: flex; justify-content: space-between;
+            align-items: center; z-index: 150; opacity: 0.9; transition: opacity 0.5s ease;
+            pointer-events: none; 
+        }
+        .bottom-bar > * { pointer-events: auto; } 
+        .bottom-bar:hover { opacity: 1; }
+
+        .controls-left, .controls-center, .controls-right { display: flex; align-items: center; }
+        
+        /* UPDATED: Added gap for line spacing */
+        .controls-center { 
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+            flex: 1; 
+            text-align: center; 
+            flex-direction: column; 
+            gap: 4px; /* Added spacing between lines */
+        }
+
+        .breath-cycle-text { font-family: 'Inter', sans-serif; font-size: clamp(0.65rem, 1.5vmin, 0.75rem); font-weight: 300; letter-spacing: 1px; word-spacing: 1px; color: var(--subtle-text); opacity: 0.5; letter-spacing: 0.5px; user-select: none; display: none; white-space: nowrap; }
+        
+        /* --- UPDATED TIMER CONTAINER & ANIMATIONS --- */
+        
+        @keyframes ring-expand {
+            0%, 100% { 
+                top: 0; left: 0; right: 0; bottom: 0; 
+                border-width: 1px;
+                opacity: 0.3;
+            }
+            50% { 
+                top: -4px; left: -4px; right: -4px; bottom: -4px; 
+                border-width: 1.5px;
+                opacity: 0.9;
+            }
+        }
+
+        .timer-container {
+            /* ABSOLUTE POSITIONING RETAINED FOR STABILITY */
+            position: absolute; 
+            top: 75%; left: 50%; transform: translateX(-50%);
+            
+            display: flex; align-items: center; justify-content: center; 
+            /* Reduced gap to tighten the center elements */
+            gap: 4px; 
+            
+            color: var(--timer-color); 
+            font-family: 'ASAP', sans-serif;
+            font-weight: 700; 
+            line-height: 1; 
+            
+            /* MODIFIED: STRICT HIDDEN DEFAULT */
+            opacity: 0; 
+            pointer-events: none;
+
+            transition: opacity 0.5s ease; 
+            letter-spacing: 1.5px;
+            z-index: 10;
+            
+            /* Ring Size (Kept responsive & slightly larger as requested previously) */
+            width: clamp(44px, 8vmin, 56px);
+            height: clamp(44px, 8vmin, 56px);
+            
+            /* TEXT SIZE REDUCED for more padding */
+            font-size: clamp(.85rem, 2vmin, 0.95rem);
+        }
+        
+        /* Rotating & Breathing Ring */
+        .timer-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 50%;
+            border: 1px dashed var(--accent-happy);
+            opacity: 0.75; 
+            pointer-events: none;
+            /* Transition reduced for snappy beep */
+            transition: box-shadow 0.1s ease, opacity 0.1s ease;
+            animation: 
+                lotus-spin 30s linear infinite, 
+                ring-expand 4s ease-in-out infinite;
+        }
+
+        /* Class to trigger ring glow beep - SUBTLE GLOW */
+        .timer-container.timer-pulse-active::before {
+             box-shadow: 0 0 8px 0px var(--accent-happy);
+             opacity: 1;
+        }
+
+        body.fullscreen-active .timer-container { top: 75%; }
+        /* Only visible if class added */
+        .timer-container.visible { opacity: 0.8; pointer-events: auto; }
+        
+        /* ICON SIZE REDUCED for more padding */
+        .timer-icon { 
+            width: clamp(12px, 2.5vmin, 15px); 
+            height: clamp(12px, 2.5vmin, 15px); 
+            fill: none; 
+            stroke: currentColor; 
+            stroke-width: 1.5; 
+            display: none !important;
+        }
+        
+        .timer-digits { 
+            display: inline-block; 
+            min-width: 2ch; 
+            text-align: center; 
+            position: relative;
+            top: 1px;
+            /* Ensure text stays stable */
+            transform: none !important;
+            color: var(--timer-color) !important;
+            
+            /* UPDATED FONT & SIZE */
+            font-family: 'Inter', sans-serif !important; 
+            font-weight: 300 !important; 
+            font-size: 1.5em; /* Larger inside container */
+        }
+
+        /* ... Keep existing Media Queries below ... */
+
+        @media (max-width: 600px) {
+            .header { padding: 25px 30px; }
+            .info-btn { right: auto; top: auto; transform: none; } 
+            .quote-box { padding: 0 20px; }
+            .lotus-container { top: 20%; }
+            .lotus-icon { width: 40px; height: 40px; }
+            /* Adjusted for relative positioning context */
+            .quote-author { font-size: 0.65em; margin-top: 5vh; } 
+            .timer-container { top: 75%; font-size: 13px; }
+            .bottom-bar { bottom: 30px; bottom: calc(30px + env(safe-area-inset-bottom)); left: 30px; right: 30px; gap: 10px; }
+            .sound-btn { font-size: 12px; }
+            .sound-control { left: 30px; bottom: 85px; bottom: calc(85px + env(safe-area-inset-bottom)); }
+
+            .panel-header { padding: 20px 20px 0px 20px; }
+            .panel-scrollable-content { padding: 0px 20px; }
+            .panel-footer { padding: 10px 20px 20px 20px; }
+            
+            .setting-row { grid-template-columns: 80px 1fr; gap: 10px; }
+            .label-wide { grid-template-columns: 1fr; margin-bottom: 5px; }
+            .label-wide + .toggle-group { grid-column: 1 / -1; }
+            
+            .footer-left { width: 100%; margin-bottom: 10px; justify-content: center; }
+            .footer-right { width: 100%; text-align: center; }
+            .panel-footer { flex-direction: column; }
+            
+            .app-title-header { display: none; }
+            
+            /* HIDE BREATHING CYCLE TEXT ON MOBILE */
+            #breathCycleIndicator { display: none !important; }
+            /* HIDE TOTAL TIME INDICATOR ON MOBILE */
+            #totalTimeIndicator { display: block !important; }
+        }
+    </style>
+</head>
+<body role="application">
+    <div class="intro-overlay" id="splashModal">
+        <div class="intro-box">
+            <svg class="info-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(50,50)">
+                    <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(0)"/>
+                    <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(60)"/>
+                    <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(120)"/>
+                    <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(180)"/>
+                    <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(240)"/>
+                    <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(300)"/>
+                </g>
+            </svg>
+            <div class="info-title">Breathe Please</div>
+            <div class="intro-main-text">
+                Slow visual breathing cues, reflective quotes, and a gentle 432 Hz sound designed to help you relax.
+            </div>
+            <div class="intro-tweak-text">
+                Tweak your desired music, colors, and fonts from settings menu. Choose your activity to begin.
+            </div>
+            <div class="splash-actions">
+                <div class="splash-checkbox-wrapper">
+                    <label class="theme-switch" for="startSoundCheck">
+                        <input type="checkbox" id="startSoundCheck" checked>
+                        <div class="slider round"></div>
+                    </label>
+                    <span class="splash-label">Play Sound</span>
+                </div>
+                
+                <div class="splash-btn-group">
+                    <button class="start-btn" onclick="startApp('breathe')">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2.5C6.5 2.5 3.5 7 3.5 12.5S7 21.5 12.5 21.5 21.5 17 21.5 11.5 16 2.5 12 2.5z" stroke-dasharray="3 3"></path>
+                            <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"></circle>
+                        </svg>
+                        Breathe
+                    </button>
+                    <button class="start-btn" onclick="startApp('read')">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                            <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                        </svg>
+                        Read Quotes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="breathing-bg" id="breathingBg"></div>
+    <div class="ripple-overlay" id="rippleContainer"></div>
+    
+    <div class="header">
+        <button class="fullscreen-btn" id="fsToggle" aria-label="Toggle Fullscreen" onclick="toggleFullscreen()">
+            <svg class="icon-expand" viewBox="0 0 24 24">
+                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+            </svg>
+            <svg class="icon-compress" viewBox="0 0 24 24">
+                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-14v3h3v2h-5V5h2z"/>
+            </svg>
+        </button>
+        
+        <div class="app-title-header" onclick="toggleGraphicMode()">Breathe Please</div>
+        
+        <button class="info-btn" id="infoBtn" aria-label="Settings & Info">
+            <span class="info-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                </svg>
+            </span>
+        </button>
+    </div>
+    
+    <div class="info-overlay" id="infoModal">
+        <div class="info-box">
+            <button class="close-modal" id="closeBtn">×</button>
+            <div class="panel-header">
+                <svg class="info-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(50,50)">
+                        <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(0)"/>
+                        <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(60)"/>
+                        <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(120)"/>
+                        <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(180)"/>
+                        <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(240)"/>
+                        <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(300)"/>
+                    </g>
+                </svg>
+                <div class="info-title">Breathe Please</div>
+                <div class="info-version">Version 3.5 Stable</div>
+                <div class="about-text-small">
+                    A minimalist mindfulness app to help mitigate anxiety through rhythmic breathing and curated wisdom.
+                </div>
+            </div>
+
+            <div class="panel-scrollable-content">
+                <div class="settings-container">
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <span class="setting-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z"/>
+                                </svg>
+                            </span>
+                            Mode
+                        </div>
+                        <div class="toggle-group">
+                            <button class="toggle-btn" id="modeBtnBreathe" onclick="setMode('breathe')">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2.5C6.5 2.5 3.5 7 3.5 12.5S7 21.5 12.5 21.5 21.5 17 21.5 11.5 16 2.5 12 2.5z" stroke-dasharray="3 3"></path>
+                                    <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"></circle>
+                                </svg>
+                                Breathe
+                            </button>
+                            <button class="toggle-btn active" id="modeBtnRead" onclick="setMode('read')">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                                    <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                                </svg>
+                                Read
+                            </button>
+                        </div>
+                    </div>
+                
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <span class="setting-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2c-5.33 0-8 3.56-8 7.11 0 5.42 5.08 11.23 8 12.89 2.92-1.66 8-7.47 8-12.89C20 5.56 17.33 2 12 2z"/>
+                                </svg>
+                            </span>
+                            Theme
+                        </div>
+                        <div class="toggle-group">
+                            <button class="toggle-btn" id="themeBtnLight" onclick="setTheme('light')" aria-label="Light Theme">Freedom</button>
+                            <button class="toggle-btn" id="themeBtnDark" onclick="setTheme('dark')" aria-label="Dark Theme">Focus</button>
+                            <button class="toggle-btn" id="themeBtnBlue" onclick="setTheme('blue')" aria-label="Blue Theme">Peace</button>
+                            <button class="toggle-btn" id="themeBtnGreen" onclick="setTheme('green')" aria-label="Green Theme">Wise</button>
+                        </div>
+                    </div>
+
+                    <div class="setting-row" id="settingRowFont">
+                        <div class="setting-label">
+                            <span class="setting-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z"/>
+                                </svg>
+                            </span>
+                            Font
+                        </div>
+                        <div class="toggle-group">
+                            <button class="toggle-btn active" id="fontBtnSerif" onclick="setFontStyle('serif')">Serif</button>
+                            <button class="toggle-btn" id="fontBtnSans" onclick="setFontStyle('sans')">Sans</button>
+                        </div>
+                    </div>
+
+                    <div class="setting-row" id="settingRowSize">
+                        <div class="setting-label">
+                            <span class="setting-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                     <path d="M21 19h-2.42l-1.27-3.58h-4.62l-1.28 3.58H9l5-14h2l5 14zm-4.32-5.06l-1.68-4.7-1.68 4.7h3.36zM3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2z"/>
+                                </svg>
+                            </span>
+                            Size
+                        </div>
+                        <div class="toggle-group">
+                            <button id="fsBtn1" class="toggle-btn" onclick="setFontSize(1)" aria-label="Small Size">Small</button>
+                            <button id="fsBtn2" class="toggle-btn active" onclick="setFontSize(2)" aria-label="Medium Size">Medium</button>
+                            <button id="fsBtn3" class="toggle-btn" onclick="setFontSize(3)" aria-label="Large Size">Large</button>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <span class="setting-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                                </svg>
+                            </span>
+                            Volume
+                        </div>
+                        <div class="toggle-group">
+                            <button id="volBtn1" class="toggle-btn" onclick="setVolumeLevel(1)" aria-label="Low Volume">Low</button>
+                            <button id="volBtn2" class="toggle-btn active" onclick="setVolumeLevel(2)" aria-label="Mid Volume">Mid</button>
+                            <button id="volBtn3" class="toggle-btn" onclick="setVolumeLevel(3)" aria-label="High Volume">High</button>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <span class="setting-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                                </svg>
+                            </span>
+                            Track
+                        </div>
+                        <div class="toggle-group">
+                            <button class="toggle-btn active" id="trackBtnOff" onclick="toggleTrackState(false)">
+                                Off
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                                </svg>
+                            </button>
+                            <button class="toggle-btn" id="trackBtnOn" onclick="toggleTrackState(true)">
+                                On
+                                <span class="waveform-icon">
+                                    <span></span><span></span><span></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <span class="setting-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+                                </svg>
+                            </span>
+                            Bell
+                        </div>
+                        <div class="toggle-group">
+                            <button class="toggle-btn" id="bellBtnOff" onclick="toggleBellState(false)">
+                                Off
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                                </svg>
+                            </button>
+                            <button class="toggle-btn active" id="bellBtnOn" onclick="toggleBellState(true)">
+                                On
+                                <span class="waveform-icon">
+                                    <span></span><span></span><span></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <div class="footer-left">
+                     <button class="footer-action-btn" id="authorListBtn">Acknowledgements</button>
+                     <button class="footer-action-btn" id="disclaimerBtn">Disclaimer</button>
+                </div>
+                <div class="footer-right">
+                    <div class="info-footer-text">
+                        Designed by <a href="mailto:writetobjd@gmail.com" class="creator-link">Bhaskarjyoti Das</a>
+                        <br>
+                        &copy; 2025
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="author-overlay" id="authorModal">
+        <div class="author-box">
+            <button class="close-modal" id="closeAuthorBtn">×</button>
+            <div class="info-title">Quote Authors</div>
+            <div class="author-list-container" id="authorList"></div>
+        </div>
+    </div>
+    
+    <div class="disclaimer-overlay" id="disclaimerModal">
+        <div class="disclaimer-box">
+             <button class="close-modal" id="closeDisclaimerBtn">×</button>
+             <div class="info-title">Disclaimer</div>
+             <div class="disclaimer-content">
+                 <h3>About Breathe Please</h3>
+                 <p>Breathe Please is a minimalist web application designed to help users mitigate anxiety and overthinking through rhythmic breathing and curated wisdom. The app features a dynamic 3D-effect visual breather that guides your breathing pace, an extensive library of philosophical and psychological quotes from diverse sources including Buddha, Marcus Aurelius, and Rumi, and immersive ambient soundscapes. Built with HTML5, CSS3, and Vanilla JavaScript, Breathe Please offers visual customization through four professional themes (Light, Dark, Blue, and Green) and typography options, along with responsive audio controls and adjustable breathing animation speeds. This application is hosted and maintained on GitHub, with source code publicly available for transparency, collaboration, and community contribution. Developed by Bhaskarjyoti Das as an experiment exploring the creative potential of AI and mindfulness.</p>
+
+                 <h3>Content Disclaimer</h3>
+                 <p>All quotations and statements displayed within this application are attributed to their respective authors and original sources. Such content is provided solely for informational and inspirational purposes and does not constitute professional, medical, psychological, or legal advice. The creator and developer of this application make no representations, warranties, or guarantees regarding the accuracy, completeness, validity, or contextual appropriateness of any quoted material. The creator expressly disclaims all liability for any reliance upon, misinterpretation of, or application of such quotations by end users. Users acknowledge that they bear sole responsibility for any consequences arising from their interpretation, reliance upon, or use of the quoted content, and the creator assumes no liability whatsoever for such consequences.</p>
+
+                 <h3>Music & Copyright Disclaimer</h3>
+                 <p>The audio and musical compositions incorporated within this application consist of a combination of open-source licensed tracks and artificially generated audio content. The creator of this application does not claim, assert, or hold any proprietary rights, ownership interest, or copyright in the underlying musical works, compositions, or audio elements. All intellectual property rights in such music remain exclusively with their respective original creators, rights holders, and licensing entities. The creator makes no warranty regarding the lawfulness, licensing compliance, or non-infringing nature of any musical content, and users assume all risk and responsibility for any potential copyright or licensing issues arising from use of this application.</p>
+
+                 <h3>Artificial Intelligence Assistance Disclaimer</h3>
+                 <p>This web application's visual design, user interface, interaction architecture, and associated documentation have been developed with substantial assistance from third-party artificial intelligence and large language models, including but not limited to Google Gemini and Perplexity AI. Users acknowledge that AI-assisted development may introduce limitations, inaccuracies, inconsistencies, or unforeseen functional defects. The creator disclaims all warranties, express or implied, regarding the reliability, accuracy, or fitness for a particular purpose of any AI-assisted elements. The creator shall not be liable for any damages, losses, or claims arising from reliance upon or use of AI-assisted components.</p>
+
+                 <h3>Privacy & Data Protection Disclaimer</h3>
+                 <p>This application is designed and operated exclusively as a client-side web application that executes entirely within the user's web browser. The application does not intentionally collect, store, transmit, or process any personally identifiable information, user data, or personal content. However, users acknowledge that third parties—including but not limited to internet service providers, network operators, web browser software, operating system providers, and other intermediaries—may collect, log, or process technical data (such as Internet Protocol addresses, browser identifiers, usage analytics, or device information) independent of and outside the control of this application or its creator. The creator assumes no responsibility for such third-party data processing and makes no representations regarding the privacy practices of such third parties. Users should consult the privacy policies of their respective service providers for complete information regarding data collection practices beyond the scope of this application.</p>
+             </div>
+        </div>
+    </div>
+    
+    <div class="lotus-container" id="mainLotus">
+        <svg class="lotus-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(50,50)">
+                <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(0)"/>
+                <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(60)"/>
+                <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(120)"/>
+                <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(180)"/>
+                <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(240)"/>
+                <path d="M0,0 C10,-20 10,-35 0,-45 C-10,-35 -10,-20 0,0" transform="rotate(300)"/>
+            </g>
+        </svg>
+    </div>
+
+    <div class="container">
+        <div class="quote-box">
+            <div class="quote-wrapper">
+                <div class="quote-text fs-2" id="quoteText">The greatest glory in living lies not in never falling, but in rising every time we fall.</div>
+                <div class="quote-author" id="quoteAuthor">Nelson Mandela</div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="breathingTimer" class="timer-container">
+        <svg class="timer-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        <span class="timer-digits" id="timerDigits">1</span>
+    </div>
+
+    <div class="bottom-bar">
+        <div class="controls-left">
+            <button class="sound-btn" id="soundBtn" onclick="toggleSoundState()">
+                 <svg class="sound-icon icon-sound" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                 <svg class="sound-icon icon-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                 </svg>
+            </button>
+        </div>
+
+        <div class="controls-center">
+             <div class="breath-cycle-text" id="totalTimeIndicator">Total time elapsed: 0 sec</div>
+             <div class="breath-cycle-text" id="breathCycleIndicator">Breathing cycle: 4 - 4 - 4</div>
+        </div>
+
+        <div class="controls-right">
+            <button class="mode-icon-btn" id="modeSwitchBtn" onclick="toggleAppMode()" aria-label="Switch Mode" title="Change Mode">
+                <div class="mode-icon book-icon">
+                     <svg class="icon-svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                     </svg>
+                </div>
+                <div class="mode-icon sphere-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2.5C6.5 2.5 3.5 7 3.5 12.5S7 21.5 12.5 21.5 21.5 17 21.5 11.5 16 2.5 12 2.5z" stroke-dasharray="3 3"></path>
+                        <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"></circle>
+                    </svg>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <div class="sound-control" id="soundControl">
+        <button class="mute-btn" id="muteBtn" onclick="toggleMute()">🔉</button>
+        <input type="range" id="volumeSlider" class="volume-slider" min="1" max="3" step="1" value="2" oninput="setVolumeLevel(this.value)">
+        <span class="sound-label" id="volumeLabel">Mid</span>
+    </div>
+
+    <audio id="track1" preload="auto" loop playsinline x-webkit-airplay="allow">
+        <source src="mantra-om.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="track2" preload="auto" loop playsinline x-webkit-airplay="allow">
+        <source src="mantra-om.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bellSound" preload="auto">
+        <source src="onebell.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const quotes = [
+            { text: "The mind is everything. What you think, you become.", author: "Buddha" },
+            { text: "Between stimulus and response there is a space. In that space is our power to choose our response.", author: "Viktor Frankl" },
+            { text: "The ability to observe without evaluating is the highest form of intelligence.", author: "J. Krishnamurti" },
+            { text: "You can't stop the waves, but you can learn to surf.", author: "Jon Kabat-Zinn" },
+            { text: "I laugh when I hear that the fish in the water is thirsty.", author: "Kabir" },
+            { text: "The antidote to overthinking isn't thinking less. It's rethinking more.", author: "Adam Grant" },
+            { text: "There is nothing more important to true growth than realizing that you are not the voice of the mind — you are the one who hears it.", author: "Michael A. Singer" },
+            { text: "We suffer more in imagination than in reality.", author: "Seneca" },
+            { text: "Your worst enemy cannot harm you as much as your own unguarded thoughts.", author: "Gautama Buddha" },
+            { text: "Nothing in life is as important as you think it is, while you are thinking about it.", author: "Daniel Kahneman" },
+            { text: "The rich will make temples for Shiva. What shall I, a poor man, do? My legs are pillars, the body the shrine, the head a cupola of gold.", author: "Basavanna" },
+            { text: "The problem is not thoughts themselves but the state of thinking without knowing that we are thinking.", author: "Sam Harris" },
+            { text: "Rule your mind or it will rule you.", author: "Gautama Buddha" },
+            { text: "The brain is like Velcro for negative experiences but Teflon for positive ones.", author: "Rick Hanson" },
+            { text: "You have power over your mind, not outside events.", author: "Marcus Aurelius" },
+            { text: "It is no measure of health to be well adjusted to a profoundly sick society.", author: "J. Krishnamurti" },
+            { text: "Emotions are not reactions to the world; they are your constructions of the world.", author: "Lisa Feldman Barrett" },
+            { text: "Leave your front door and your back door open. Allow your thoughts to come and go. Just don't serve them tea.", author: "Shunryu Suzuki" },
+            { text: "Don't forget love; it will bring all the madness you need to unfurl yourself across the universe.", author: "Mirabai" },
+            { text: "Where attention goes, neural firing flows, and neural connection grows.", author: "Dr. Dan Siegel" },
+            { text: "The mind is like water. When turbulent, it's difficult to see. When it's calm, everything becomes clear.", author: "Confucius" },
+            { text: "Establishment in the Self is the only source of peace.", author: "Thakur Anukulchandra" },
+            { text: "Meditation is intermittent fasting for the mind.", author: "Naval Ravikant" },
+            { text: "Imperfection is not our personal problem — it is a natural part of existing.", author: "Tara Brach" },
+            { text: "The quieter you become, the more you can hear.", author: "Ram Dass" },
+            { text: "To understand the immeasurable, the mind must be extraordinarily quiet and still.", author: "J. Krishnamurti" },
+            { text: "Wherever you are, that's the entry point.", author: "Kabir" },
+            { text: "Mind is the Master power that moulds and makes.", author: "James Allen" },
+            { text: "You are the sky. Everything else – it's just the weather.", author: "Matt Haig" },
+            { text: "Don't believe everything you think.", author: "Unknown" },
+            { text: "Compare yourself to who you were yesterday, not to who someone else is today.", author: "Jordan Peterson" },
+            { text: "Analysis is paralysis.", author: "Unknown" },
+            { text: "Life begins where fear ends.", author: "Osho" },
+            { text: "Gratitude is the antidote to anxiety.", author: "Andrew Huberman" },
+            { text: "God resides in those hearts in which there is no hatred towards anyone, there is no greed or malice.", author: "Guru Ravidas" },
+            { text: "If a problem is fixable, there is no need to worry.", author: "Dalai Lama" },
+            { text: "He who has a why to live can bear almost any how.", author: "Friedrich Nietzsche" },
+            { text: "Worrying is like paying a debt you don't owe.", author: "Mark Twain" },
+            { text: "Anxiety is the handmaiden of contemporary ambition.", author: "Alain de Botton" },
+            { text: "Anxiety is the price of consciousness.", author: "Saul Bellow" },
+            { text: "Things standing shall fall, but the moving ever shall stay.", author: "Basavanna" },
+            { text: "Today I escaped anxiety. Or no, I discarded it, because it was within me.", author: "Marcus Aurelius" },
+            { text: "The voice in your head is a fast talker.", author: "Ethan Kross" },
+            { text: "Fear is a liar.", author: "Unknown" },
+            { text: "Almost everything will work again if you unplug it for a few minutes, including you.", author: "Anne Lamott" },
+            { text: "Do it afraid.", author: "Joyce Meyer" },
+            { text: "Freedom from fear is the first of all virtues.", author: "Swami Vivekananda" },
+            { text: "The present moment is the only moment available to us.", author: "Thich Nhat Hanh" },
+            { text: "Fear is a natural reaction to moving closer to the truth.", author: "Pema Chödrön" },
+            { text: "Slowly, slowly, O mind, everything happens at its own pace.", author: "Kabir" },
+            { text: "You are the world and the world is you.", author: "J. Krishnamurti" },
+            { text: "Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.", author: "Gautama Buddha" },
+            { text: "Nature does not hurry, yet everything is accomplished.", author: "Lao Tzu" },
+            { text: "Wherever you are, be there totally.", author: "Eckhart Tolle" },
+            { text: "Sitting silently, doing nothing, spring comes, and the grass grows by itself.", author: "Basho" },
+            { text: "When you walk, walk. When you eat, eat.", author: "Zen Proverb" },
+            { text: "Breathe. It's only a moment.", author: "Unknown" },
+            { text: "The greatest glory in living lies not in never falling, but in rising every time we fall.", author: "Nelson Mandela" },
+            { text: "Arise! Awake! And stop not until the goal is reached.", author: "Swami Vivekananda" },
+            { text: "Work without attachment is the beginning of spirituality.", author: "Ramakrishna Paramahamsa" },
+            { text: "Vulnerability is not winning or losing; it's having the courage to show up and be seen when we have no control over the outcome.", author: "Brené Brown" },
+            { text: "It is better to be an active fool than an idle wise!", author: "Thakur Anukulchandra" },
+            { text: "Whatever you do, do it with your whole body and mind; be like a good bonfire.", author: "Shunryu Suzuki" },
+            { text: "Words are the only jewels I possess.", author: "Tukaram" },
+            { text: "Detach from the outcome, not the action.", author: "Bhagavad Gita" },
+            { text: "The obstacle is the path.", author: "Zen Saying" },
+            { text: "Plan out your work and then work out your plan.", author: "Swami Chinmayananda" },
+            { text: "Be — don't try to become.", author: "Osho" },
+            { text: "Truth is a pathless land.", author: "J. Krishnamurti" },
+            { text: "You are not a drop in the ocean. You are the entire ocean in a drop.", author: "Rumi" },
+            { text: "If your heart is pure, the water in your wooden tub is holy water.", author: "Guru Ravidas" },
+            { text: "The privilege of a lifetime is to become who you truly are.", author: "Carl Jung" },
+            { text: "Stop acting so small. You are the universe in ecstatic motion.", author: "Rumi" },
+            { text: "Sell your cleverness and buy bewilderment.", author: "Rumi" },
+            { text: "The wound is the place where the Light enters you.", author: "Rumi" },
+            { text: "To love oneself is the beginning of a lifelong romance.", author: "Oscar Wilde" },
+            { text: "We cannot direct the wind, but we can adjust our sails.", author: "Dolly Parton" },
+            { text: "Rest my mind, rest on the feet of the Lord; release the confusion.", author: "Srimanta Sankardeva (Borgeet)" },
+            { text: "The secret of change is to focus all of your energy not on fighting the old, but on building the new.", author: "Socrates" },
+            { text: "The capacity to be alone is the capacity to love. It may look paradoxical to you, but it's not.", author: "Osho" },
+            { text: "Your worst enemy cannot wish you more harm than your own unguarded thoughts.", author: "Buddha" },
+            { text: "Seek not to change the world. Rather, seek to love it.", author: "Thich Nhat Hanh" },
+            { text: "Tension is who you think you should be. Relaxation is who you are.", author: "Chinese Proverb" },
+            { text: "Energy flows where attention goes.", author: "James Redfield" },
+            { text: "The only person you are destined to become is the person you decide to be.", author: "Ralph Waldo Emerson" },
+            { text: "Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.", author: "Rumi" },
+            { text: "Sometimes the smallest things take up the most room in your heart.", author: "A.A. Milne" },
+            { text: "Being happy doesn't mean everything is perfect. It means you've decided to look beyond the imperfections.", author: "Unknown" },
+            { text: "Still waters run deep.", author: "Proverb" },
+            { text: "Your inner peace is worth more than winning any argument.", author: "Unknown" }
+        ];
+        
+        let availableQuotes = [];
+        let currentQuoteIndex = -1;
+        
+        let track1, track2;
+        let activeTrack = null;
+        let isGlobalPlaying = false;
+        let isCrossfading = false;
+        const CROSSFADE_TIME = 4; 
+        
+        const volumeMap = { 1: 0.05, 2: 0.2, 3: 0.4 };
+        const labelMap = { 1: "Low", 2: "Mid", 3: "High" };
+        
+        /* UPDATED DEFAULT VOLUME TO 2 (MID) */
+        let currentVolumeLevel = 2; 
+        let isMuted = false;
+        
+        // NEW STATES FOR SPLIT CONTROLS
+        let isTrackEnabled = true;
+        let isBellEnabled = true;
+
+        let isDynamicTheme = true;
+
+        let updateInterval = 1; 
+        let cycleCounter = 0;
+        let appMode = 'read'; 
+
+        // GLOBAL START TIME
+        let appStartTime = Date.now();
+
+        const infoBtn = document.getElementById('infoBtn');
+        const infoModal = document.getElementById('infoModal');
+        const closeBtn = document.getElementById('closeBtn');
+        const authorListBtn = document.getElementById('authorListBtn');
+        const authorModal = document.getElementById('authorModal');
+        const closeAuthorBtn = document.getElementById('closeAuthorBtn');
+        const mainLotus = document.getElementById('mainLotus');
+        
+        const disclaimerBtn = document.getElementById('disclaimerBtn');
+        const disclaimerModal = document.getElementById('disclaimerModal');
+        const closeDisclaimerBtn = document.getElementById('closeDisclaimerBtn');
+        
+        // Bell Audio Reference
+        const bellAudio = document.getElementById('bellSound');
+
+        function openInfoPanel(e) {
+            e.stopPropagation();
+            infoModal.classList.add('active');
+        }
+        
+        function closeInfoPanel() {
+            infoModal.classList.remove('active');
+        }
+
+        infoBtn.addEventListener('click', openInfoPanel);
+        
+        closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeInfoPanel(); });
+        
+        infoModal.addEventListener('click', (e) => { 
+            const isInteractive = e.target.closest('button') || 
+                                  e.target.closest('input') || 
+                                  e.target.closest('label') ||
+                                  e.target.closest('a');
+            if (!isInteractive) {
+                closeInfoPanel();
+            }
+        });
+
+        authorListBtn.addEventListener('click', (e) => { e.stopPropagation(); populateAuthorList(); authorModal.classList.add('active'); });
+        closeAuthorBtn.addEventListener('click', (e) => { e.stopPropagation(); authorModal.classList.remove('active'); });
+        authorModal.addEventListener('click', (e) => { if (e.target === authorModal) authorModal.classList.remove('active'); });
+        
+        disclaimerBtn.addEventListener('click', (e) => { e.stopPropagation(); disclaimerModal.classList.add('active'); });
+        closeDisclaimerBtn.addEventListener('click', (e) => { e.stopPropagation(); disclaimerModal.classList.remove('active'); });
+        disclaimerModal.addEventListener('click', (e) => { if (e.target === disclaimerModal) disclaimerModal.classList.remove('active'); });
+
+        function populateAuthorList() {
+            const listContainer = document.getElementById('authorList');
+            const authors = [...new Set(quotes.map(q => q.author))].sort();
+            listContainer.innerHTML = '';
+            authors.forEach(author => {
+                const div = document.createElement('div');
+                div.className = 'author-item';
+                // SECURITY FIX: textContent used instead of innerHTML
+                div.textContent = author;
+                listContainer.appendChild(div);
+            });
+        }
+        
+        let cycleStartTime = performance.now();
+        const CYCLE_DURATION = 12000;
+
+        function setMode(mode) {
+            appMode = mode;
+            const btnBreathe = document.getElementById('modeBtnBreathe');
+            const btnRead = document.getElementById('modeBtnRead');
+            const quoteText = document.getElementById('quoteText');
+            const quoteAuthor = document.getElementById('quoteAuthor');
+            const breathingTimer = document.getElementById('breathingTimer');
+            const breathCycleIndicator = document.getElementById('breathCycleIndicator'); 
+            const totalTimeIndicator = document.getElementById('totalTimeIndicator');
+            const fsBtns = [document.getElementById('fsBtn1'), document.getElementById('fsBtn2'), document.getElementById('fsBtn3')];
+            
+            const bookIcon = document.querySelector('.book-icon');
+            const sphereIcon = document.querySelector('.sphere-icon');
+            
+            // Setting Row Elements for Fading
+            const fontRow = document.getElementById('settingRowFont');
+            const sizeRow = document.getElementById('settingRowSize');
+
+            if (mode === 'breathe') {
+                // BREATHE MODE
+                btnBreathe.classList.add('active');
+                btnRead.classList.remove('active');
+                
+                // Fade out Font and Size settings
+                fontRow.classList.add('disabled-row');
+                sizeRow.classList.add('disabled-row');
+
+                bookIcon.style.display = 'block';
+                sphereIcon.style.display = 'none';
+                
+                // APPLY INSTANT HIDE CLASS
+                quoteAuthor.classList.add('instant-hide'); 
+                quoteText.classList.add('instant-hide');
+                
+                // Ensure display block is set so opacity can work if we switch back, 
+                // but the instant-hide class forces opacity 0
+                quoteAuthor.style.display = 'block'; 
+                
+                fsBtns.forEach(btn => btn.classList.add('disabled'));
+                
+                // Reset styling for Breathe Mode
+                quoteText.style.transition = 'none'; 
+                quoteText.style.opacity = '0';
+                
+                quoteText.classList.add('force-sans');
+                quoteText.classList.add('breathe-mode-active');
+                quoteText.classList.add('breathe-text-large');
+                
+                breathingTimer.classList.add('visible'); 
+                breathCycleIndicator.style.display = 'block';
+                totalTimeIndicator.style.display = 'block';
+                
+            } else {
+                // READ MODE - INSTANT SWITCH
+                btnRead.classList.add('active');
+                btnBreathe.classList.remove('active');
+                
+                // Restore Font and Size settings
+                fontRow.classList.remove('disabled-row');
+                sizeRow.classList.remove('disabled-row');
+                
+                sphereIcon.style.display = 'block';
+                bookIcon.style.display = 'none';
+                
+                breathingTimer.classList.remove('visible'); 
+                breathCycleIndicator.style.display = 'none'; 
+                totalTimeIndicator.style.display = 'none';
+                
+                // REMOVE INSTANT HIDE CLASS
+                quoteAuthor.classList.remove('instant-hide');
+                quoteText.classList.remove('instant-hide');
+                
+                quoteText.classList.remove('force-sans');
+                quoteText.classList.remove('breathe-mode-active');
+                quoteText.classList.remove('breathe-text-large');
+
+                quoteAuthor.style.display = 'block'; 
+                fsBtns.forEach(btn => btn.classList.remove('disabled'));
+                
+                // --- INSTANT DISPLAY LOGIC ---
+                // 1. Remove transition so opacity jumps
+                quoteText.style.transition = 'none'; 
+                // 2. Force Opacity to 1 immediately
+                quoteText.style.opacity = '1';
+                // 3. Reset Transforms
+                quoteText.style.letterSpacing = '0px'; 
+                quoteText.style.transform = 'scale(1)';
+                
+                displayQuote(); 
+            }
+            closeInfoPanel();
+        }
+
+        function toggleAppMode() {
+            if (appMode === 'read') {
+                setMode('breathe');
+            } else {
+                setMode('read');
+            }
+        }
+        
+        /* NEW: Graphic Mode Toggle */
+        function toggleGraphicMode() {
+            document.body.classList.toggle('graphic-mode');
+        }
+        
+        let lastSeconds = -1;
+
+        function animationLoop() {
+            requestAnimationFrame(animationLoop);
+            
+            const now = performance.now();
+            const elapsed = (now - cycleStartTime) % CYCLE_DURATION;
+            const textEl = document.getElementById('quoteText');
+            
+            if (appMode === 'breathe') {
+                const timerEl = document.getElementById('timerDigits');
+                const breathingTimer = document.getElementById('breathingTimer');
+                
+                let targetText = "";
+                let scaleVal = 1;
+                let letterSpacingVal = 0; 
+                let shakeX = 0;
+                let shakeY = 0;
+                
+                // TIMER LOGIC: 1 to 12
+                let currentSec = Math.floor(elapsed / 1000) + 1;
+                if (currentSec > 12) currentSec = 1;
+                
+                if (currentSec !== lastSeconds) {
+                    timerEl.textContent = currentSec; 
+                    lastSeconds = currentSec;
+                    
+                    // Trigger Ring Pulse on 1, 5, 9
+                    if(currentSec === 1 || currentSec === 5 || currentSec === 9) {
+                        breathingTimer.classList.add('timer-pulse-active');
+                        // Remove class shortly after to allow re-trigger
+                        setTimeout(() => {
+                             breathingTimer.classList.remove('timer-pulse-active');
+                        }, 200); 
+                    }
+                }
+                
+                // --- INHALE PHASE (0ms to 4000ms) ---
+                if (elapsed < 4000) {
+                    targetText = "Inhale";
+                    let p = elapsed / 4000; 
+                    let ease = -(Math.cos(Math.PI * p) - 1) / 2;
+                    
+                    // Scale: Grows from 0.6 to 1.85 (Small to Large)
+                    scaleVal = 0.6 + (1.25 * ease);
+                    
+                    // Spacing: Starts at 5px (Wide), shrinks to -2px (Tight)
+                    letterSpacingVal = 5 - (7 * ease); // 5 - 7 = -2
+                    
+                } 
+                // --- HOLD PHASE (4000ms to 8000ms) ---
+                else if (elapsed < 8000) {
+                    targetText = "Hold";
+                    scaleVal = 1.85; // Stays Large
+                    letterSpacingVal = -2; // Stays Tight (-2px)
+                    
+                    // VIBRATION LOGIC FOR "HOLD"
+                    if (elapsed < 7600) {
+                        const vibrationIntensity = 0.7; // Slightly increased
+                        shakeX = (Math.random() - 0.5) * vibrationIntensity;
+                        shakeY = (Math.random() - 0.5) * vibrationIntensity;
+                    } else {
+                        shakeX = 0;
+                        shakeY = 0;
+                    }
+                    
+                } 
+                // --- EXHALE PHASE (8000ms to 12000ms) ---
+                else {
+                    targetText = "Exhale";
+                    let p = (elapsed - 8000) / 4000;
+                    let ease = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+                    
+                    // Scale: Shrinks from 1.85 to 0.6 (Large to Substantially Small)
+                    scaleVal = 1.85 - (1.25 * ease);
+                    
+                    // Spacing: Grows from -2px to 5px (Tight to Wide)
+                    letterSpacingVal = -2 + (7 * ease); // -2 + 7 = 5
+                }
+                
+                if (textEl.textContent !== targetText) {
+                     textEl.textContent = targetText;
+                }
+                
+                // --- SMOOTH TEXT FADE LOGIC ---
+                const PHASE_DURATION = 4000;
+                const FADE_DURATION = 400; 
+                const timeInPhase = elapsed % PHASE_DURATION;
+                let opacityVal = 0.5; 
+
+                if (timeInPhase < FADE_DURATION) {
+                    opacityVal = 0.5 * (timeInPhase / FADE_DURATION);
+                } 
+                else if (timeInPhase > (PHASE_DURATION - FADE_DURATION)) {
+                    opacityVal = 0.5 * ((PHASE_DURATION - timeInPhase) / FADE_DURATION);
+                }
+                
+                // Apply Transform
+                textEl.style.transform = `scale(${scaleVal}) translate(${shakeX}px, ${shakeY}px)`;
+                textEl.style.letterSpacing = `${letterSpacingVal}px`;
+                textEl.style.opacity = opacityVal; 
+            } 
+            else if (appMode === 'read') {
+                // READ MODE LOGIC (Unchanged)
+                const timeInCurrentCycle = elapsed; 
+                const authorEl = document.getElementById('quoteAuthor');
+                
+                if (timeInCurrentCycle < 1500) {
+                     textEl.style.opacity = timeInCurrentCycle / 1500;
+                     if (timeInCurrentCycle < 1000) {
+                         authorEl.style.opacity = 0;
+                     } else {
+                         authorEl.style.opacity = ((timeInCurrentCycle - 1000) / 1500) * 0.6;
+                     }
+                } 
+                else if (timeInCurrentCycle > 10000 && (cycleCounter + 1) >= updateInterval) {
+                     const fadeOutProgress = (timeInCurrentCycle - 10000) / 2000;
+                     const opacity = 1 - fadeOutProgress;
+                     textEl.style.opacity = opacity;
+                     authorEl.style.opacity = opacity * 0.6; 
+                } 
+                else {
+                    textEl.style.opacity = 1;
+                    authorEl.style.opacity = 0.6; 
+                }
+            }
+        }
+
+        function updateTotalTime() {
+            const now = Date.now();
+            let diff = Math.floor((now - appStartTime) / 1000); // Total seconds
+
+            const hours = Math.floor(diff / 3600);
+            diff %= 3600;
+            const minutes = Math.floor(diff / 60);
+            const seconds = diff % 60;
+
+            let timeParts = [];
+            if (hours > 0) timeParts.push(`${hours} hr`);
+            if (minutes > 0) timeParts.push(`${minutes} min`);
+            if (seconds > 0) timeParts.push(`${seconds} sec`);
+            
+            // Fallback for initial state 0 seconds
+            if (timeParts.length === 0) timeParts.push("0 sec");
+
+            const timeString = `Total time elapsed: ${timeParts.join(' ')}`;
+            document.getElementById('totalTimeIndicator').innerText = timeString;
+        }
+
+        function checkDynamicTheme() {
+            if (!isDynamicTheme) return;
+            const hour = new Date().getHours();
+            if (hour >= 6 && hour < 18) {
+                setTheme('light', true); 
+            } else {
+                setTheme('blue', true); 
+            }
+        }
+
+        function setTheme(mode, isInternalCall = false) {
+            const body = document.body;
+            
+            const btns = ['Light', 'Dark', 'Blue', 'Green'];
+            btns.forEach(b => {
+                const el = document.getElementById('themeBtn' + b);
+                if(el) el.classList.remove('active');
+            });
+            
+            if (!isInternalCall && mode !== 'dynamic') {
+                isDynamicTheme = false;
+            } else if (mode === 'dynamic') {
+                isDynamicTheme = true;
+                checkDynamicTheme(); 
+                return; 
+            }
+            
+            if (mode === 'light') body.removeAttribute('data-theme');
+            else body.setAttribute('data-theme', mode);
+            
+            if (mode === 'blue' || mode === 'green') setFontStyle('sans', true); 
+            else setFontStyle('serif', true); 
+            
+            const activeBtn = document.getElementById('themeBtn' + mode.charAt(0).toUpperCase() + mode.slice(1));
+            if(activeBtn) activeBtn.classList.add('active');
+
+            if(!isInternalCall) closeInfoPanel();
+        }
+
+        function setFontStyle(mode, isInternalCall = false) {
+            const text = document.getElementById('quoteText');
+            const isCurrentlySans = text.classList.contains('sans-mode');
+            
+            if ((mode === 'sans' && isCurrentlySans) || (mode === 'serif' && !isCurrentlySans)) return;
+
+            if (mode === 'sans') text.classList.add('sans-mode');
+            else text.classList.remove('sans-mode');
+            updateFontUI();
+            
+            if(!isInternalCall) closeInfoPanel();
+        }
+
+        function updateFontUI() {
+            const text = document.getElementById('quoteText');
+            const btnSerif = document.getElementById('fontBtnSerif');
+            const btnSans = document.getElementById('fontBtnSans');
+            const isSans = text.classList.contains('sans-mode');
+            
+            if (isSans) {
+                btnSans.classList.add('active');
+                btnSerif.classList.remove('active');
+            } else {
+                btnSerif.classList.add('active');
+                btnSans.classList.remove('active');
+            }
+        }
+        
+        function setFontSize(level) {
+            if(appMode === 'breathe') return; 
+            const text = document.getElementById('quoteText');
+            const btns = [document.getElementById('fsBtn1'), document.getElementById('fsBtn2'), document.getElementById('fsBtn3')];
+            text.classList.remove('fs-1', 'fs-2', 'fs-3');
+            text.classList.add('fs-' + level);
+            btns.forEach((btn, index) => {
+                if(index + 1 === level) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+            closeInfoPanel();
+        }
+
+        function setVolumeLevel(step) {
+            currentVolumeLevel = parseInt(step);
+            isMuted = false; 
+            updateVolumeUI();
+            
+            const targetVol = volumeMap[currentVolumeLevel];
+            
+            if (activeTrack && !isCrossfading) {
+                activeTrack.volume = targetVol;
+            }
+            // Update bell volume with SUBSTANTIAL reduction factor (0.25)
+            if(bellAudio) bellAudio.volume = targetVol * 0.25;
+            
+            closeInfoPanel();
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            
+            // UPDATED: Sync Sub-Controls with Master Mute Switch
+            if (isMuted) {
+                // If muted, turn off Track and Bell toggles visually
+                toggleTrackState(false);
+                toggleBellState(false);
+            } else {
+                // If unmuted, turn on Track and Bell toggles visually
+                toggleTrackState(true);
+                toggleBellState(true);
+            }
+            
+            updateVolumeUI();
+            updateSoundButtonState(); 
+            
+            const targetVol = isMuted ? 0 : volumeMap[currentVolumeLevel];
+            
+            if (activeTrack) {
+                activeTrack.volume = targetVol;
+            }
+            if (track1) track1.muted = isMuted;
+            if (track2) track2.muted = isMuted;
+            
+            // Bell Logic
+            if(bellAudio) {
+                bellAudio.muted = isMuted;
+                // Apply reduction if not muted
+                bellAudio.volume = isMuted ? 0 : (targetVol * 0.25);
+            }
+        }
+
+        function toggleMusicState(turnOn) {
+            if (turnOn) {
+                if (!isGlobalPlaying) startAudio();
+                else if (isMuted) toggleMute();
+            } else {
+                if (!isMuted && isGlobalPlaying) toggleMute();
+            }
+            closeInfoPanel();
+        }
+        
+        // NEW: Specific Toggles for Track and Bell
+        function toggleTrackState(state) {
+            isTrackEnabled = state;
+            const btnOn = document.getElementById('trackBtnOn');
+            const btnOff = document.getElementById('trackBtnOff');
+            
+            if(state) {
+                btnOn.classList.add('active');
+                btnOff.classList.remove('active');
+                // Resume track if global sound is playing
+                if(isGlobalPlaying && !isMuted && activeTrack) {
+                    activeTrack.volume = volumeMap[currentVolumeLevel];
+                }
+            } else {
+                btnOff.classList.add('active');
+                btnOn.classList.remove('active');
+                // Silence track immediately
+                if(activeTrack) activeTrack.volume = 0;
+            }
+        }
+
+        function toggleBellState(state) {
+            isBellEnabled = state;
+            const btnOn = document.getElementById('bellBtnOn');
+            const btnOff = document.getElementById('bellBtnOff');
+            
+            if(state) {
+                btnOn.classList.add('active');
+                btnOff.classList.remove('active');
+            } else {
+                btnOff.classList.add('active');
+                btnOn.classList.remove('active');
+            }
+        }
+        
+        function updateMusicToggleUI() {
+            // Simplified global toggle checks
+            // This function is kept for compatibility with volume slider interactions
+        }
+
+        function updateVolumeUI() {
+            const popupSlider = document.getElementById('volumeSlider');
+            const label = document.getElementById('volumeLabel');
+            const muteBtn = document.getElementById('muteBtn');
+            const btns = [document.getElementById('volBtn1'), document.getElementById('volBtn2'), document.getElementById('volBtn3')];
+            
+            if (isMuted) {
+                muteBtn.textContent = '🔇'; 
+                if(label) label.textContent = 'Mute'; 
+                if(popupSlider) popupSlider.classList.add('disabled');
+                btns.forEach(btn => btn.classList.add('disabled'));
+            } else {
+                muteBtn.textContent = '🔉'; 
+                if(label) label.textContent = labelMap[currentVolumeLevel]; 
+                if(popupSlider) {
+                    popupSlider.classList.remove('disabled'); 
+                    popupSlider.value = currentVolumeLevel;
+                }
+                btns.forEach((btn, index) => {
+                    btn.classList.remove('disabled');
+                    if ((index + 1) === currentVolumeLevel) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+            }
+            updateMusicToggleUI();
+        }
+        
+        function updateSoundButtonState() {
+            const btn = document.getElementById('soundBtn');
+            const isPlaying = isGlobalPlaying && !isMuted;
+            
+            if (isMuted) {
+                btn.classList.add('muted-state');
+            } else {
+                btn.classList.remove('muted-state');
+            }
+
+            if (isPlaying) {
+                btn.classList.add('playing');
+            } else {
+                btn.classList.remove('playing');
+            }
+            updateMusicToggleUI();
+        }
+        
+        function toggleSoundState() {
+            if (!isGlobalPlaying) {
+                startAudio();
+            } else {
+                toggleMute();
+            }
+        }
+
+        function triggerRipple(x, y) {
+            const container = document.getElementById('rippleContainer');
+            const finalX = x !== undefined ? x : window.innerWidth / 2;
+            const finalY = y !== undefined ? y : window.innerHeight / 2;
+
+            for (let i = 0; i < 2; i++) { 
+                setTimeout(() => {
+                    const ripple = document.createElement('div');
+                    ripple.classList.add('ripple-wave');
+                    ripple.style.left = finalX + 'px';
+                    ripple.style.top = finalY + 'px';
+                    container.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 2000); 
+                }, i * 100); 
+            }
+        }
+
+        function initAudio() {
+            track1 = document.getElementById('track1');
+            track2 = document.getElementById('track2');
+            track1.volume = volumeMap[currentVolumeLevel];
+            track2.volume = 0; 
+            track1.addEventListener('timeupdate', () => checkGaplessLoop(track1, track2));
+            track2.addEventListener('timeupdate', () => checkGaplessLoop(track2, track1));
+            activeTrack = track1;
+            
+            // Init Bell Volume Reduced
+            if(bellAudio) bellAudio.volume = volumeMap[currentVolumeLevel] * 0.25;
+        }
+
+        function checkGaplessLoop(current, next) {
+            if (!isGlobalPlaying) return;
+            if (isCrossfading) return;
+            if (isNaN(current.duration)) return;
+            // Only loop if tracks are enabled
+            if (!isTrackEnabled) return; 
+
+            let timeLeft = current.duration - current.currentTime;
+            if (timeLeft <= CROSSFADE_TIME && timeLeft > 0) {
+                isCrossfading = true;
+                next.currentTime = 0; next.volume = 0;
+                next.play().catch(e => {
+                    console.error("Audio loop failed", e);
+                    isCrossfading = false;
+                });
+                performEqualPowerCrossfade(current, next);
+            }
+        }
+
+        function performEqualPowerCrossfade(outgoing, incoming) {
+            const intervalStep = 50; 
+            const steps = (CROSSFADE_TIME * 1000) / intervalStep;
+            let counter = 0;
+            const fadeInterval = setInterval(() => {
+                if (!isGlobalPlaying) { clearInterval(fadeInterval); isCrossfading = false; return; }
+                
+                // Volume check logic: Muted OR Track Disabled -> 0 volume
+                const baseVol = (isMuted || !isTrackEnabled) ? 0 : volumeMap[currentVolumeLevel];
+                
+                let ratio = counter / steps; 
+                let gainIn = Math.sin(ratio * Math.PI / 2);
+                let gainOut = Math.cos(ratio * Math.PI / 2);
+                
+                incoming.volume = baseVol * gainIn;
+                outgoing.volume = baseVol * gainOut;
+                
+                counter++;
+                if (counter >= steps) {
+                    clearInterval(fadeInterval);
+                    outgoing.pause(); outgoing.currentTime = 0; outgoing.volume = 0; 
+                    incoming.volume = baseVol; activeTrack = incoming; isCrossfading = false;
+                }
+            }, intervalStep);
+        }
+
+        function startAudio() {
+            if (!track1 || !track2) initAudio();
+            isGlobalPlaying = true;
+            
+            // Determine start volume based on separate toggles
+            const trackStartVol = (isMuted || !isTrackEnabled) ? 0 : volumeMap[currentVolumeLevel];
+            const bellStartVol = (isMuted || !isBellEnabled) ? 0 : (volumeMap[currentVolumeLevel] * 0.25);
+
+            if (!activeTrack) activeTrack = track1;
+            activeTrack.volume = trackStartVol;
+            
+            // Bell setup
+            if(bellAudio) {
+                bellAudio.muted = isMuted;
+                bellAudio.volume = bellStartVol;
+                // Initial silent play to unlock audio context on iOS/Mobile
+                bellAudio.play().then(() => {
+                    bellAudio.pause();
+                    bellAudio.currentTime = 0;
+                }).catch(e => console.log("Bell unlock", e));
+            }
+
+            activeTrack.play().then(() => {
+                updateSoundButtonState();
+            }).catch(e => {
+                console.log("Autoplay blocked or file missing", e);
+                isGlobalPlaying = false; 
+                updateSoundButtonState();
+            });
+        }
+        
+        function startApp(mode) {
+            setMode(mode); 
+            document.getElementById('splashModal').classList.add('hidden');
+            
+            const bg = document.getElementById('breathingBg');
+            const lotus = document.querySelector('.lotus-container');
+            
+            // SYNC TRACK STATE FROM SPLASH SELECTION
+            const shouldPlaySound = document.getElementById('startSoundCheck').checked;
+            toggleTrackState(shouldPlaySound);
+            
+            bg.classList.add('breathing-active');
+            
+            requestAnimationFrame(() => {
+                cycleStartTime = performance.now(); 
+            });
+            
+            lotus.classList.add('lotus-active');
+            requestAnimationFrame(animationLoop);
+
+            if (!track1 || !track2) initAudio();
+            
+            track1.load();
+            track2.load();
+            if(bellAudio) bellAudio.load();
+
+            const unlock1 = track1.play().then(() => {
+                track1.pause();
+                track1.currentTime = 0;
+            }).catch(e => console.log("Unlock 1 failed", e));
+
+            const unlock2 = track2.play().then(() => {
+                track2.pause();
+                track2.currentTime = 0;
+            }).catch(e => console.log("Unlock 2 failed", e));
+            
+            const unlockBell = bellAudio ? bellAudio.play().then(() => {
+                bellAudio.pause();
+                bellAudio.currentTime = 0;
+            }).catch(e => console.log("Bell unlock failed", e)) : Promise.resolve();
+            
+            Promise.all([unlock1, unlock2, unlockBell]).then(() => {
+                 if (shouldPlaySound) {
+                     startAudio();
+                 } else {
+                     updateSoundButtonState();
+                 }
+            });
+        }
+
+        document.body.addEventListener('click', (e) => {
+            if (e.target.closest('button') || 
+                e.target.closest('input') || 
+                e.target.closest('.info-box') || 
+                e.target.closest('.intro-box') ||
+                e.target.closest('.author-box') ||
+                e.target.closest('.disclaimer-box')) {
+                return;
+            }
+            triggerRipple(e.clientX, e.clientY);
+        });
+
+        function displayQuote() {
+            if (currentQuoteIndex === -1) return;
+            const quote = quotes[currentQuoteIndex];
+            const quoteText = document.getElementById('quoteText');
+            const quoteAuthor = document.getElementById('quoteAuthor');
+            const quoteBox = document.querySelector('.quote-box');
+            
+            quoteText.textContent = quote.text;
+            if (quote.author && quote.author.toLowerCase() !== 'unknown') {
+                quoteAuthor.textContent = quote.author; 
+                quoteBox.classList.remove('no-author'); 
+            } else {
+                quoteAuthor.style.display = 'none'; 
+                quoteBox.classList.add('no-author'); 
+            }
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function refillQuotes() {
+            let pool = [];
+            for (let i = 0; i < quotes.length; i++) { pool.push(i); }
+            shuffleArray(pool);
+            availableQuotes = pool;
+            if (availableQuotes.length > 1 && currentQuoteIndex !== -1) {
+                const prevAuthor = quotes[currentQuoteIndex].author;
+                if (quotes[availableQuotes[0]].author === prevAuthor) {
+                    let temp = availableQuotes[0];
+                    availableQuotes[0] = availableQuotes[1];
+                    availableQuotes[1] = temp;
+                }
+            }
+        }
+
+        function getNewQuote() {
+            if (availableQuotes.length === 0) { refillQuotes(); }
+            const quoteIndex = availableQuotes.shift();
+            currentQuoteIndex = quoteIndex;
+            displayQuote();
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        document.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                document.body.classList.add('fullscreen-active');
+            } else {
+                document.body.classList.remove('fullscreen-active');
+            }
+        });
+        
+        window.addEventListener('load', function() {
+            getNewQuote(); 
+            initAudio(); 
+            // NEW: Auto-set Large Font Size (Level 3) if on mobile
+            if (window.innerWidth <= 600) {
+                setFontSize(3);
+           }
+            checkDynamicTheme();
+            setInterval(checkDynamicTheme, 60000);
+
+            // INITIALIZE TOTAL TIME COUNTER
+            setInterval(updateTotalTime, 1000);
+            updateTotalTime(); // Immediate run
+
+            const bg = document.getElementById('breathingBg');
+            const quoteTextEl = document.getElementById('quoteText');
+            
+            // --- NEW: CLICK TO RANDOMIZE QUOTE ---
+            quoteTextEl.addEventListener('click', function() {
+                if (appMode === 'read') {
+                    getNewQuote();
+                }
+            });
+            // -------------------------------------
+            
+            setInterval(updateSoundButtonState, 500);
+
+            bg.addEventListener('animationiteration', () => {
+                cycleStartTime = performance.now();
+                cycleCounter++;
+                
+                // Play Bell Sound at the start of every cycle if:
+                // 1. Global sound is playing
+                // 2. Not muted
+                // 3. Bell specific toggle is enabled
+                if (isGlobalPlaying && !isMuted && isBellEnabled && bellAudio) {
+                    bellAudio.currentTime = 0;
+                    // Ensure volume is set correctly before playing (in case user changed slider during loop)
+                    bellAudio.volume = volumeMap[currentVolumeLevel] * 0.25; 
+                    bellAudio.play().catch(e => console.log("Bell playback prevented", e));
+                }
+                
+                if (appMode === 'read' && cycleCounter >= updateInterval) {
+                    cycleCounter = 0; 
+                    getNewQuote();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
