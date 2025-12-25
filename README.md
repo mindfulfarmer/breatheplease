@@ -3,9 +3,11 @@ Breathe Please is a minimalist web application designed to help users mitigate a
 
 #### Screenshots
 <img width="300" height="161" alt="screenshot-1766650593694" src="https://github.com/user-attachments/assets/cc7f545a-8431-40ab-b4e2-2e8905f11ae0" />
-<img width="300" height="161" alt="screenshot-1766650568100" src="https://github.com/user-attachments/assets/07292729-2955-41f3-b297-f139f6afb31c" />
+<img width="300" height="161" alt="screenshot-1766651180043" src="https://github.com/user-attachments/assets/b06061dc-9a5b-4997-aa75-df0f2e31cd2d" />
 <img width="300" height="161" alt="screenshot-1766650623149" src="https://github.com/user-attachments/assets/cdd6591f-d451-4f69-9eaf-9ca48803639c" />
 <img width="300" height="161" alt="screenshot-1766650644466" src="https://github.com/user-attachments/assets/b4d0c530-df59-466f-a4a1-84551c2cf7ad" />
+<img width="300" height="161" alt="screenshot-1766651259560" src="https://github.com/user-attachments/assets/5da206f7-2368-4d13-b378-f29c1d975c51" />
+<img width="300" height="161" alt="screenshot-1766651311702" src="https://github.com/user-attachments/assets/47cee211-d342-41a2-9548-7f4959178e9a" />
 
 
 ## Features
