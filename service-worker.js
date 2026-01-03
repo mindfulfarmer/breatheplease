@@ -53,10 +53,16 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  self.addEventListener('fetch', function(event) {
+  // A simple no-op (or pass-through) is enough to trigger the prompt
+  // But ideally, you should return a response here.
+});
+
   // Handle App Assets (Cache First, fall back to Network)
   event.respondWith(
     caches.match(event.request).then((response) => {
       return response || fetch(event.request);
     })
   );
+
 });
